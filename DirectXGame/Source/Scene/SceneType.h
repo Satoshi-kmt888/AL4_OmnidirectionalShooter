@@ -4,6 +4,6 @@
 /// シーンの種類
 /// </summary>
 enum class SceneType {
-	k_title,
-	k_game,
+	SCENE_TITLE,
+	SCENE_GAME,
 };

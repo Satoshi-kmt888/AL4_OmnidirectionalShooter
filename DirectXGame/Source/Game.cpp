@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include "Scene/SceneManager.h"
+
 #include <2d/ImGuiManager.h>
 #include <base/DirectXCommon.h>
 #include <KamataEngine.h>
@@ -27,6 +29,10 @@ bool Game::Initialize() {
 		return false;
 	}
 #endif
+
+	// シーンを初期化
+	m_scene = std::make_unique<SceneManager>();
+	m_scene->Initialize();
 
 	// 初期化が問題なく完了したため初期化フラグを立てる
 	m_initialized = true;
@@ -63,6 +69,9 @@ void Game::Update() {
 #endif
 	//------------------------------
 
+	// シーンを更新
+	m_scene->Update();
+
 	//------------------------------
 #ifdef USE_IMGUI
 	// ImGui受付終了
@@ -74,6 +83,9 @@ void Game::Draw() {
 	// DirectXによる描画前処理
 	m_dx_common->PreDraw();
 	//------------------------------
+
+	// シーンを描画
+	m_scene->Draw();
 
 #ifdef USE_IMGUI
 	// 更新処理で溜めたImGuiを描画する

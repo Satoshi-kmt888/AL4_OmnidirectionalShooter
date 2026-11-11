@@ -2,7 +2,6 @@
 
 #include "GameScene.h"
 #include "IScene.h"
-#include "TitleScene.h"
 
 #include <optional>
 
@@ -48,9 +47,8 @@ std::unique_ptr<IScene> SceneManager::CreateScene(SceneType type) {
 	// タイプ別でシーンを生成
 	switch (type) {
 		using enum SceneType;
-	case k_title:
-		return std::make_unique<TitleScene>();
-	case k_game:
+	case SCENE_TITLE:
+	case SCENE_GAME:
 		return std::make_unique<GameScene>();
 	}
 

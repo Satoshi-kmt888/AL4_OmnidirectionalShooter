@@ -8,6 +8,8 @@ class DirectXCommon;
 class ImGuiManager;
 } // namespace KamataEngine
 
+class SceneManager;
+
 /// <summary>
 /// ゲーム全体の初期化/更新/描画/終了を統括するクラス。
 /// </summary>
@@ -47,8 +49,8 @@ private:
 	// private methods
 	//==================================================
 
-	void Update();
-	void Draw();
+	void Update(); // 更新処理
+	void Draw();   // 描画処理
 
 	//==================================================
 	// private variables
@@ -63,4 +65,6 @@ private:
 
 	// 初期化フラグ
 	bool m_initialized = false;
+
+	std::unique_ptr<SceneManager> m_scene;
 };
