@@ -54,7 +54,7 @@ public:
 	bool IsTrigger(Action action) const;
 	bool IsRelease(Action action) const;
 
-	KamataEngine::Vector2 CalcMoveAxis(const KamataEngine::Input* input, const XINPUT_STATE* pad_state);
+	const KamataEngine::Vector2& GetMoveAxis() const { return m_move_axis; }
 
 private:
 	//=========================================================

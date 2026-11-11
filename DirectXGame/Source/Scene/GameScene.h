@@ -8,8 +8,9 @@
 namespace KamataEngine {
 class Input;
 class AxisIndicator;
-}
+} // namespace KamataEngine
 
+class InputAction;
 class DebugCamera;
 class Skysphere;
 class Player;
@@ -44,6 +45,9 @@ private:
 	//=========================================================
 	// private variables
 	//=========================================================
+
+	// 入力
+	std::unique_ptr<InputAction> m_input_action;
 
 	// カメラ
 	KamataEngine::Camera m_camera{};

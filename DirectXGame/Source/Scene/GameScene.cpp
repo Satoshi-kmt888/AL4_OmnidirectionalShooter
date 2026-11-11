@@ -3,6 +3,7 @@
 #include "GameObject/Camera/DebugCamera.h"
 #include "GameObject/Player/Player.h"
 #include "GameObject/World/SkySphere.h"
+#include "Input/InputAction.h"
 
 #include <2d/Sprite.h>
 #include <3d/AxisIndicator.h>
@@ -16,6 +17,10 @@ GameScene::GameScene() = default;
 GameScene::~GameScene() = default;
 
 void GameScene::Enter() {
+	// 入力処理を初期化
+	m_input_action = std::make_unique<InputAction>();
+	m_input_action->Register();
+
 	// カメラを初期化
 	m_camera.Initialize();
 
@@ -46,10 +51,13 @@ void GameScene::Enter() {
 	/*--- プレイヤー ---*/
 
 	m_player = std::make_unique<Player>();
-	m_player->Initialize(Model::CreateFromOBJ("cube"));
+	m_player->Initialize(m_input_action.get(), Model::CreateFromOBJ("cube"));
 }
 
 void GameScene::Update() {
+	// 入力状態を更新
+	m_input_action->Update();
+
 	// カメラを更新
 	UpdateCamera();
 
@@ -88,19 +96,19 @@ void GameScene::Exit() {
 
 void GameScene::UpdateCamera() {
 #ifdef DEVELOP
-	//デバッグカメラを有効化するか
+	// デバッグカメラを有効化するか
 	if (m_input->TriggerKey(DIK_F1)) {
 		m_is_debug_camera_enabled = !m_is_debug_camera_enabled;
 	}
 
-	//デバッグカメラが有効なら
+	// デバッグカメラが有効なら
 	if (m_is_debug_camera_enabled) {
 		m_debug_camera->Update();
 		m_camera.matView = m_debug_camera->GetCamera().matView;
 		m_camera.matProjection = m_debug_camera->GetCamera().matProjection;
 		m_camera.TransferMatrix();
 
-		//デバッグカメラのデータを使用するのでリターンする
+		// デバッグカメラのデータを使用するのでリターンする
 		return;
 	}
 #endif

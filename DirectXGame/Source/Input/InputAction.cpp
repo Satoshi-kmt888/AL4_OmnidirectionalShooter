@@ -26,55 +26,8 @@ bool IsBindingPress(const InputBinding& binding, const Input* input, const XINPU
 
 	return false;
 }
-} // namespace
 
-InputAction::InputAction() = default;
-
-InputAction::~InputAction() = default;
-
-void InputAction::Register() {
-	// 決定
-	AddBinding(Action::ACTION_DECIDE, {InputDevice::DEVICE_KEYBOARD, DIK_SPACE});
-	AddBinding(Action::ACTION_DECIDE, {InputDevice::DEVICE_PAD, XINPUT_GAMEPAD_A});
-}
-
-void InputAction::Update() {
-	//
-	m_previous_state = m_current_state;
-
-	auto input = Input::GetInstance();
-
-	XINPUT_STATE pad_state{};
-	const bool has_pad = input->GetJoystickState(0, pad_state);
-	const XINPUT_STATE* pad_state_ptr = has_pad ? &pad_state : nullptr;
-
-	for (size_t i = 0; i < k_action_count; ++i) {
-		bool is_press = false;
-
-		for (const InputBinding& binding : m_bindings[i]) {
-			if (IsBindingPress(binding, input, pad_state_ptr)) {
-				is_press = true;
-				break;
-			}
-		}
-
-		m_current_state[i] = is_press;
-	}
-}
-
-bool InputAction::IsPress(Action action) const { return m_current_state[ToIndex(action)]; }
-
-bool InputAction::IsTrigger(Action action) const {
-	const size_t index = ToIndex(action);
-	return m_current_state[index] && !m_previous_state[index];
-}
-
-bool InputAction::IsRelease(Action action) const {
-	const size_t index = ToIndex(action);
-	return !m_current_state[index] && m_previous_state[index];
-}
-
-Vector2 InputAction::CalcMoveAxis(const Input* input, const XINPUT_STATE* pad_state) {
+Vector2 CalcMoveAxis(const Input* input, const XINPUT_STATE* pad_state) {
 	Vector2 axis = {0.0f, 0.0f};
 
 	/*--- 左スティック ---*/
@@ -115,6 +68,55 @@ Vector2 InputAction::CalcMoveAxis(const Input* input, const XINPUT_STATE* pad_st
 	}
 
 	return axis;
+}
+} // namespace
+
+InputAction::InputAction() = default;
+
+InputAction::~InputAction() = default;
+
+void InputAction::Register() {
+	// 決定
+	AddBinding(Action::ACTION_DECIDE, {InputDevice::DEVICE_KEYBOARD, DIK_SPACE});
+	AddBinding(Action::ACTION_DECIDE, {InputDevice::DEVICE_PAD, XINPUT_GAMEPAD_A});
+}
+
+void InputAction::Update() {
+	//
+	m_previous_state = m_current_state;
+
+	auto input = Input::GetInstance();
+
+	XINPUT_STATE pad_state{};
+	const bool has_pad = input->GetJoystickState(0, pad_state);
+	const XINPUT_STATE* pad_state_ptr = has_pad ? &pad_state : nullptr;
+
+	for (size_t i = 0; i < k_action_count; ++i) {
+		bool is_press = false;
+
+		for (const InputBinding& binding : m_bindings[i]) {
+			if (IsBindingPress(binding, input, pad_state_ptr)) {
+				is_press = true;
+				break;
+			}
+		}
+
+		m_current_state[i] = is_press;
+	}
+
+	m_move_axis = CalcMoveAxis(input, pad_state_ptr);
+}
+
+bool InputAction::IsPress(Action action) const { return m_current_state[ToIndex(action)]; }
+
+bool InputAction::IsTrigger(Action action) const {
+	const size_t index = ToIndex(action);
+	return m_current_state[index] && !m_previous_state[index];
+}
+
+bool InputAction::IsRelease(Action action) const {
+	const size_t index = ToIndex(action);
+	return !m_current_state[index] && m_previous_state[index];
 }
 
 void InputAction::AddBinding(Action action, const InputBinding& binding) { m_bindings[ToIndex(action)].push_back(binding); }
