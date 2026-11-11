@@ -32,8 +32,8 @@ private:
 	// private variables
 	//==================================================
 
-	// エンジン所有クラスへの参照
+	// モデル
 	KamataEngine::Model* m_model = nullptr;
-
+	// ワールド変換データ
 	KamataEngine::WorldTransform m_worldTransform{};
 };

@@ -1,6 +1,7 @@
 #include "GameScene.h"
 
 #include "GameObject/Camera/DebugCamera.h"
+#include "GameObject/Player/Player.h"
 #include "GameObject/World/SkySphere.h"
 
 #include <2d/Sprite.h>
@@ -41,6 +42,11 @@ void GameScene::Enter() {
 
 	m_skysphere = std::make_unique<Skysphere>();
 	m_skysphere->Initialize(Model::CreateFromOBJ("skysphere"));
+
+	/*--- プレイヤー ---*/
+
+	m_player = std::make_unique<Player>();
+	m_player->Initialize(Model::CreateFromOBJ("cube"));
 }
 
 void GameScene::Update() {
@@ -49,6 +55,8 @@ void GameScene::Update() {
 
 	// 天球を更新
 	m_skysphere->Update();
+
+	m_player->Update();
 
 #ifdef DEVELOP
 	if (m_axis) {
@@ -107,6 +115,8 @@ void GameScene::DrawModel() {
 
 	// 天球を描画
 	m_skysphere->Draw(&m_camera);
+
+	m_player->Draw(&m_camera);
 
 	//-------------------------
 	// モデル描画後処理

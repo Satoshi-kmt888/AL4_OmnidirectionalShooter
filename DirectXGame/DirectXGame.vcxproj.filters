@@ -11,6 +11,18 @@
     <Filter Include="Source\Scene">
       <UniqueIdentifier>{d7ef64c6-21fa-4947-8190-062cdcfd6827}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject">
+      <UniqueIdentifier>{f068dea8-3591-4b5c-ab15-979f0a627807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\Camera">
+      <UniqueIdentifier>{8f7cd659-67a8-497c-896d-a7d09a4b1265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\World">
+      <UniqueIdentifier>{e7e27f35-b22a-4178-9264-9f73625ee63d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\Player">
+      <UniqueIdentifier>{3706dac2-ba00-483f-9c6c-e043cceca76f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,6 +36,21 @@
     </ClCompile>
     <ClCompile Include="Source\Math\MathUtility.cpp">
       <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\GameScene.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\Camera\CameraController.cpp">
+      <Filter>Source\GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\Camera\DebugCamera.cpp">
+      <Filter>Source\GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\World\Skysphere.cpp">
+      <Filter>Source\GameObject\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\Player\Player.cpp">
+      <Filter>Source\GameObject\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +68,21 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\SceneType.h">
       <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\GameScene.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\Camera\CameraController.h">
+      <Filter>Source\GameObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\Camera\DebugCamera.h">
+      <Filter>Source\GameObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\World\Skysphere.h">
+      <Filter>Source\GameObject\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\Player\Player.h">
+      <Filter>Source\GameObject\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

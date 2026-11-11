@@ -2,7 +2,6 @@
 
 #include "Math/MathUtility.h"
 
-#include <3d/Camera.h>
 #include <3d/Model.h>
 #include <cassert>
 

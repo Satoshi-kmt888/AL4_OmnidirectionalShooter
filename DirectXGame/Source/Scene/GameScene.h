@@ -12,6 +12,7 @@ class AxisIndicator;
 
 class DebugCamera;
 class Skysphere;
+class Player;
 
 /// <summary>
 /// ゲームシーン
@@ -56,4 +57,5 @@ private:
 
 	std::unique_ptr<DebugCamera> m_debug_camera;
 	std::unique_ptr<Skysphere> m_skysphere;
+	std::unique_ptr<Player> m_player;
 };
