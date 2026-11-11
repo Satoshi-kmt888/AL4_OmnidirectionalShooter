@@ -13,6 +13,7 @@ class AxisIndicator;
 class InputAction;
 class DebugCamera;
 class Skysphere;
+class Ground;
 class Player;
 class CameraController;
 
@@ -64,6 +65,7 @@ private:
 
 	std::unique_ptr<DebugCamera> m_debug_camera;
 	std::unique_ptr<Skysphere> m_skysphere;
+	std::unique_ptr<Ground> m_ground;
 	std::unique_ptr<Player> m_player;
 	std::unique_ptr<CameraController> m_camera_controller;
 };

@@ -3,6 +3,7 @@
 #include "GameObject/Camera/CameraController.h"
 #include "GameObject/Camera/DebugCamera.h"
 #include "GameObject/Player/Player.h"
+#include "GameObject/World/Ground.h"
 #include "GameObject/World/SkySphere.h"
 #include "Input/InputAction.h"
 
@@ -50,6 +51,11 @@ void GameScene::Enter() {
 	m_skysphere = std::make_unique<Skysphere>();
 	m_skysphere->Initialize(Model::CreateFromOBJ("skysphere"));
 
+	/*--- 地面 ---*/
+
+	m_ground = std::make_unique<Ground>();
+	m_ground->Initialize(Model::CreateFromOBJ("ground"));
+
 	/*--- プレイヤー ---*/
 
 	m_player = std::make_unique<Player>();
@@ -73,6 +79,7 @@ void GameScene::Update() {
 
 	// 天球を更新
 	m_skysphere->Update();
+	m_ground->Update();
 
 	m_player->Update();
 	m_camera_controller->Update();
@@ -134,6 +141,7 @@ void GameScene::DrawModel() {
 
 	// 天球を描画
 	m_skysphere->Draw(&m_camera);
+	m_ground->Draw(&m_camera);
 
 	m_player->Draw(&m_camera);
 

@@ -16,9 +16,9 @@ void Skysphere::Initialize(Model* model) {
 
 	m_model = model;
 
-	m_worldTransform.Initialize();
+	m_world_transform.Initialize();
 }
 
-void Skysphere::Update() { MathUtility::WorldTransformUpdate(m_worldTransform); }
+void Skysphere::Update() { MathUtility::WorldTransformUpdate(m_world_transform); }
 
-void Skysphere::Draw(const Camera* camera) { m_model->Draw(m_worldTransform, *camera); }
+void Skysphere::Draw(const Camera* camera) { m_model->Draw(m_world_transform, *camera); }

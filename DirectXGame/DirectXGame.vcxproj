@@ -183,6 +183,7 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     <ClCompile Include="Source\GameObject\Camera\CameraController.cpp" />
     <ClCompile Include="Source\GameObject\Camera\DebugCamera.cpp" />
     <ClCompile Include="Source\GameObject\Player\Player.cpp" />
+    <ClCompile Include="Source\GameObject\World\Ground.cpp" />
     <ClCompile Include="Source\GameObject\World\Skysphere.cpp" />
     <ClCompile Include="Source\Input\InputAction.cpp" />
     <ClCompile Include="Source\Math\MathUtility.cpp" />
@@ -194,6 +195,7 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     <ClInclude Include="Source\GameObject\Camera\CameraController.h" />
     <ClInclude Include="Source\GameObject\Camera\DebugCamera.h" />
     <ClInclude Include="Source\GameObject\Player\Player.h" />
+    <ClInclude Include="Source\GameObject\World\Ground.h" />
     <ClInclude Include="Source\GameObject\World\Skysphere.h" />
     <ClInclude Include="Source\Input\InputAction.h" />
     <ClInclude Include="Source\Math\MathUtility.h" />

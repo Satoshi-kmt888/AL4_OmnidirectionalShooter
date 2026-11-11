@@ -35,5 +35,5 @@ private:
 	// モデル
 	KamataEngine::Model* m_model = nullptr;
 	// ワールド変換データ
-	KamataEngine::WorldTransform m_worldTransform{};
+	KamataEngine::WorldTransform m_world_transform{};
 };

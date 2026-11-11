@@ -17,6 +17,11 @@ CameraController::~CameraController() = default;
 void CameraController::Initialize(Camera* camera) {
 	assert(camera);
 	m_camera = camera;
+
+	m_angle = 32.0f;
+	m_camera->rotation_.x = ConvertToRadian(m_angle);
+	m_camera->translation_.y = 20.0f;
+	m_camera->translation_.z = -32.0f;
 }
 
 void CameraController::Update() {
