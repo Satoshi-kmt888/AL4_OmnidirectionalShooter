@@ -23,6 +23,12 @@
     <Filter Include="Source\GameObject\Player">
       <UniqueIdentifier>{3706dac2-ba00-483f-9c6c-e043cceca76f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Input">
+      <UniqueIdentifier>{d89f07f7-38f4-42be-b00b-196e73302318}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core">
+      <UniqueIdentifier>{1a3d1acd-4040-4f97-b3b4-a7942434c43d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,6 +57,15 @@
     </ClCompile>
     <ClCompile Include="Source\GameObject\Player\Player.cpp">
       <Filter>Source\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\World\Ground.cpp">
+      <Filter>Source\GameObject\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input\InputAction.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Clock.cpp">
+      <Filter>Source\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +98,15 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject\Player\Player.h">
       <Filter>Source\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\World\Ground.h">
+      <Filter>Source\GameObject\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input\InputAction.h">
+      <Filter>Source\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Clock.h">
+      <Filter>Source\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,9 +1,11 @@
 #include "Game.h"
 
+#include "Core/Clock.h"
 #include "Scene/SceneManager.h"
 
 #include <2d/ImGuiManager.h>
 #include <base/DirectXCommon.h>
+#include <imgui.h>
 #include <KamataEngine.h>
 
 using namespace KamataEngine;
@@ -30,6 +32,9 @@ bool Game::Initialize() {
 	}
 #endif
 
+	// Δタイム用クロックインスタンスを取得
+	m_clock = Clock::GetInstance();
+
 	// シーンを初期化
 	m_scene = std::make_unique<SceneManager>();
 	m_scene->Initialize();
@@ -42,9 +47,14 @@ bool Game::Initialize() {
 void Game::Run() {
 	// エンジンの更新処理が成功し続ける限りループを続ける
 	while (!KamataEngine::Update()) {
+		// Δタイムを更新
+		m_clock->Update();
+
 		// 更新・描画を別関数にまとめ、ここで実行
-		this->Update();
-		this->Draw();
+		if (m_clock->IsFixedUpdateRequired()) {
+			this->Update();
+			this->Draw();
+		}
 	}
 }
 
@@ -68,6 +78,13 @@ void Game::Update() {
 	m_imgui->Begin();
 #endif
 	//------------------------------
+
+#ifdef USE_IMGUI
+	ImGui::Begin("Game");
+	// Δタイムを表示
+	ImGui::Text("delta_time = %f", m_clock->GetDeltaTime());
+	ImGui::End();
+#endif
 
 	// シーンを更新
 	m_scene->Update();

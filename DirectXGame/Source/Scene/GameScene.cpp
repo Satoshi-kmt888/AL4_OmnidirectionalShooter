@@ -165,6 +165,7 @@ void GameScene::ImGuiControl() {
 #ifdef USE_IMGUI
 	ImGui::Begin("GameScene");
 	m_camera_controller->ImGuiControl();
+	m_player->ImGuiControl();
 	ImGui::End();
 #endif
 }

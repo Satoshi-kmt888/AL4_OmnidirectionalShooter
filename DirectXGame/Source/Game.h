@@ -8,6 +8,7 @@ class DirectXCommon;
 class ImGuiManager;
 } // namespace KamataEngine
 
+class Clock;
 class SceneManager;
 
 /// <summary>
@@ -66,5 +67,6 @@ private:
 	// 初期化フラグ
 	bool m_initialized = false;
 
+	Clock* m_clock = nullptr;
 	std::unique_ptr<SceneManager> m_scene;
 };

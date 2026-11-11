@@ -26,6 +26,8 @@ public:
 	void Update();
 	void Draw(const KamataEngine::Camera* camera);
 
+	void ImGuiControl();
+
 	//=========================================================
 	// accessor
 	//=========================================================
@@ -52,4 +54,5 @@ private:
 	KamataEngine::WorldTransform m_world_transform{};
 
 	KamataEngine::Vector3 m_velocity{};
+	float m_move_speed = 16.0f;
 };
