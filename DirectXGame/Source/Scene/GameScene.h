@@ -14,6 +14,7 @@ class InputAction;
 class DebugCamera;
 class Skysphere;
 class Player;
+class CameraController;
 
 /// <summary>
 /// ゲームシーン
@@ -42,6 +43,8 @@ private:
 	void DrawModel();
 	void DrawSprite();
 
+	void ImGuiControl();
+
 	//=========================================================
 	// private variables
 	//=========================================================
@@ -62,4 +65,5 @@ private:
 	std::unique_ptr<DebugCamera> m_debug_camera;
 	std::unique_ptr<Skysphere> m_skysphere;
 	std::unique_ptr<Player> m_player;
+	std::unique_ptr<CameraController> m_camera_controller;
 };

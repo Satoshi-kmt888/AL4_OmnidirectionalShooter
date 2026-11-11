@@ -1,5 +1,6 @@
 #include "GameScene.h"
 
+#include "GameObject/Camera/CameraController.h"
 #include "GameObject/Camera/DebugCamera.h"
 #include "GameObject/Player/Player.h"
 #include "GameObject/World/SkySphere.h"
@@ -8,6 +9,7 @@
 #include <2d/Sprite.h>
 #include <3d/AxisIndicator.h>
 #include <3d/Model.h>
+#include <imgui.h>
 #include <input/Input.h>
 
 using namespace KamataEngine;
@@ -52,11 +54,19 @@ void GameScene::Enter() {
 
 	m_player = std::make_unique<Player>();
 	m_player->Initialize(m_input_action.get(), Model::CreateFromOBJ("cube"));
+
+	/*--- カメラコントローラー ---*/
+
+	m_camera_controller = std::make_unique<CameraController>();
+	m_camera_controller->Initialize(&m_camera);
+	m_camera_controller->SetTarget(&m_player->GetWorldTransform());
 }
 
 void GameScene::Update() {
 	// 入力状態を更新
 	m_input_action->Update();
+
+	ImGuiControl();
 
 	// カメラを更新
 	UpdateCamera();
@@ -65,6 +75,7 @@ void GameScene::Update() {
 	m_skysphere->Update();
 
 	m_player->Update();
+	m_camera_controller->Update();
 
 #ifdef DEVELOP
 	if (m_axis) {
@@ -139,4 +150,13 @@ void GameScene::DrawSprite() {
 	//-------------------------
 	// モデル描画後処理
 	Sprite::PostDraw();
+}
+
+void GameScene::ImGuiControl() {
+// ゲームシーンのImGui操作はここに集約する
+#ifdef USE_IMGUI
+	ImGui::Begin("GameScene");
+	m_camera_controller->ImGuiControl();
+	ImGui::End();
+#endif
 }

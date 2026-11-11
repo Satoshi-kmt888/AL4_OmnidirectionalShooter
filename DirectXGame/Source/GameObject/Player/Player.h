@@ -26,6 +26,12 @@ public:
 	void Update();
 	void Draw(const KamataEngine::Camera* camera);
 
+	//=========================================================
+	// accessor
+	//=========================================================
+
+	const KamataEngine::WorldTransform& GetWorldTransform() const { return m_world_transform; }
+
 private:
 	//=========================================================
 	// private methods
