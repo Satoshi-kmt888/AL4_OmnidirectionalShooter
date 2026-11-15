@@ -29,6 +29,9 @@
     <Filter Include="Source\Core">
       <UniqueIdentifier>{1a3d1acd-4040-4f97-b3b4-a7942434c43d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Scene\Wipe">
+      <UniqueIdentifier>{2fe21d86-f018-4baa-a646-54ba2c8e5626}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,6 +69,15 @@
     </ClCompile>
     <ClCompile Include="Source\Core\Clock.cpp">
       <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Wipe\GridWipe.cpp">
+      <Filter>Source\Scene\Wipe</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Wipe\WipeManager.cpp">
+      <Filter>Source\Scene\Wipe</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Easing.cpp">
+      <Filter>Source\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +119,18 @@
     </ClInclude>
     <ClInclude Include="Source\Core\Clock.h">
       <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Wipe\GridWipe.h">
+      <Filter>Source\Scene\Wipe</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Wipe\IWipe.h">
+      <Filter>Source\Scene\Wipe</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Wipe\WipeManager.h">
+      <Filter>Source\Scene\Wipe</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Easing.h">
+      <Filter>Source\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

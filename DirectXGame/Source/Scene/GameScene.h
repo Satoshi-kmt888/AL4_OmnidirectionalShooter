@@ -2,8 +2,8 @@
 
 #include "IScene.h"
 
-#include <3d/AxisIndicator.h>
 #include <3d/Camera.h>
+#include <memory>
 
 namespace KamataEngine {
 class Input;
@@ -12,6 +12,7 @@ class AxisIndicator;
 
 class InputAction;
 class DebugCamera;
+class WipeManager;
 class Skysphere;
 class Ground;
 class Player;
@@ -22,6 +23,13 @@ class CameraController;
 /// </summary>
 class GameScene : public IScene {
 public:
+	// 状態
+	enum class State {
+		STATE_OPENING,
+		STATE_GAME,
+		STATE_CLOSING,
+	};
+
 	//=========================================================
 	// public methods
 	//=========================================================
@@ -39,16 +47,24 @@ private:
 	// private methods
 	//=========================================================
 
+	// デバッグカメラを含めるカメラの更新処理
 	void UpdateCamera();
 
-	void DrawModel();
-	void DrawSprite();
+	// オブジェクトごとの描画処理
+	void DrawModel();  // モデル描画
+	void DrawSprite(); // スプライト描画
 
-	void ImGuiControl();
+	// ImGui操作
+	void ControlImGui();
+
+	// 状態遷移
+	void ChangeState();
 
 	//=========================================================
 	// private variables
 	//=========================================================
+
+	State m_state = State::STATE_OPENING;
 
 	// 入力
 	std::unique_ptr<InputAction> m_input_action;
@@ -68,4 +84,10 @@ private:
 	std::unique_ptr<Ground> m_ground;
 	std::unique_ptr<Player> m_player;
 	std::unique_ptr<CameraController> m_camera_controller;
+
+	/*--- 演出 ---*/
+
+	const float m_wipe_duration = 0.8f;
+
+	std::unique_ptr<WipeManager> m_wipe;
 };

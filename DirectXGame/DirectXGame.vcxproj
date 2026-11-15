@@ -187,9 +187,12 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     <ClCompile Include="Source\GameObject\World\Ground.cpp" />
     <ClCompile Include="Source\GameObject\World\Skysphere.cpp" />
     <ClCompile Include="Source\Input\InputAction.cpp" />
+    <ClCompile Include="Source\Math\Easing.cpp" />
     <ClCompile Include="Source\Math\MathUtility.cpp" />
     <ClCompile Include="Source\Scene\GameScene.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Scene\Wipe\GridWipe.cpp" />
+    <ClCompile Include="Source\Scene\Wipe\WipeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\Clock.h" />
@@ -200,11 +203,15 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     <ClInclude Include="Source\GameObject\World\Ground.h" />
     <ClInclude Include="Source\GameObject\World\Skysphere.h" />
     <ClInclude Include="Source\Input\InputAction.h" />
+    <ClInclude Include="Source\Math\Easing.h" />
     <ClInclude Include="Source\Math\MathUtility.h" />
     <ClInclude Include="Source\Scene\GameScene.h" />
     <ClInclude Include="Source\Scene\IScene.h" />
     <ClInclude Include="Source\Scene\SceneManager.h" />
     <ClInclude Include="Source\Scene\SceneType.h" />
+    <ClInclude Include="Source\Scene\Wipe\GridWipe.h" />
+    <ClInclude Include="Source\Scene\Wipe\IWipe.h" />
+    <ClInclude Include="Source\Scene\Wipe\WipeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,10 +6,12 @@
 #include "GameObject/World/Ground.h"
 #include "GameObject/World/SkySphere.h"
 #include "Input/InputAction.h"
+#include "Wipe/WipeManager.h"
 
 #include <2d/Sprite.h>
 #include <3d/AxisIndicator.h>
 #include <3d/Model.h>
+#include <base/TextureManager.h>
 #include <imgui.h>
 #include <input/Input.h>
 
@@ -66,16 +68,29 @@ void GameScene::Enter() {
 	m_camera_controller = std::make_unique<CameraController>();
 	m_camera_controller->Initialize(&m_camera);
 	m_camera_controller->SetTarget(&m_player->GetWorldTransform());
+
+	//=========================================================
+	// effect
+	//=========================================================
+
+	/*--- ワイプ ---*/
+
+	m_wipe = std::make_unique<WipeManager>();
+	m_wipe->Start(WipeType::TYPE_GRID, WipeState::STATE_FADE_OUT, m_wipe_duration, TextureManager::Load("white1x1.png"));
 }
 
 void GameScene::Update() {
 	// 入力状態を更新
 	m_input_action->Update();
 
-	ImGuiControl();
+	ChangeState();
+
+	ControlImGui();
 
 	// カメラを更新
 	UpdateCamera();
+
+	m_wipe->Update();
 
 	// 天球を更新
 	m_skysphere->Update();
@@ -155,17 +170,38 @@ void GameScene::DrawSprite() {
 	Sprite::PreDraw();
 	//-------------------------
 
+	// ワイプは最後に描画
+	m_wipe->Draw();
+
 	//-------------------------
 	// モデル描画後処理
 	Sprite::PostDraw();
 }
 
-void GameScene::ImGuiControl() {
+void GameScene::ControlImGui() {
 // ゲームシーンのImGui操作はここに集約する
 #ifdef USE_IMGUI
 	ImGui::Begin("GameScene");
-	m_camera_controller->ImGuiControl();
-	m_player->ImGuiControl();
+	m_camera_controller->ControlImGui();
+	m_player->ControlImGui();
 	ImGui::End();
 #endif
+}
+
+void GameScene::ChangeState() {
+	switch (m_state) {
+		using enum State;
+	case STATE_OPENING:
+		if (m_wipe->IsFinished()) {
+			m_state = STATE_GAME;
+		}
+		break;
+	case STATE_GAME:
+		break;
+	case STATE_CLOSING:
+		if (m_wipe->IsFinished()) {
+			RequestSceneChange(SceneType::SCENE_TITLE);
+		}
+		break;
+	}
 }
