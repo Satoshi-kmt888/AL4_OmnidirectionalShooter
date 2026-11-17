@@ -178,8 +178,9 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GameObject\Bullet\Bullet.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Source\Core\Clock.cpp" />
+    <ClCompile Include="Source\Core\Time.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameObject\Camera\CameraController.cpp" />
     <ClCompile Include="Source\GameObject\Camera\DebugCamera.cpp" />
@@ -195,13 +196,16 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     <ClCompile Include="Source\Scene\Wipe\WipeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Core\Clock.h" />
+    <ClInclude Include="Source\GameObject\Bullet\Bullet.h" />
+    <ClInclude Include="Source\Core\Time.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\GameObject\Camera\CameraController.h" />
     <ClInclude Include="Source\GameObject\Camera\DebugCamera.h" />
     <ClInclude Include="Source\GameObject\Player\Player.h" />
     <ClInclude Include="Source\GameObject\World\Ground.h" />
     <ClInclude Include="Source\GameObject\World\Skysphere.h" />
+    <ClInclude Include="Source\Geometry\AABB.h" />
+    <ClInclude Include="Source\Geometry\Sphere.h" />
     <ClInclude Include="Source\Input\InputAction.h" />
     <ClInclude Include="Source\Math\Easing.h" />
     <ClInclude Include="Source\Math\MathUtility.h" />

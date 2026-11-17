@@ -1,7 +1,7 @@
 #define NOMINMAX
 #include "GridWipe.h"
 
-#include "Core/Clock.h"
+#include "Core/Time.h"
 #include "Math/Easing.h"
 
 #include <2d/Sprite.h>
@@ -34,7 +34,7 @@ void GridWipe::Update() {
 		return;
 	}
 
-	m_timer += Clock::GetInstance()->GetDeltaTime();
+	m_timer += Time::GetInstance()->GetDeltaTime();
 	const float t = std::min(m_timer / m_duration, 1.0f);
 
 	const bool is_closing = (m_state == WipeState::STATE_FADE_IN);

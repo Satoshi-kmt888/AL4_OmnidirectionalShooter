@@ -60,8 +60,14 @@ void GameScene::Enter() {
 
 	/*--- プレイヤー ---*/
 
+	// モデル群を作成
+	Player::ModelGroup player_models{
+	    .player = Model::CreateFromOBJ("cube"),
+	    .bullet = Model::CreateSphere(),
+	};
+
 	m_player = std::make_unique<Player>();
-	m_player->Initialize(m_input_action.get(), Model::CreateFromOBJ("cube"));
+	m_player->Initialize(m_input_action.get(), player_models);
 
 	/*--- カメラコントローラー ---*/
 

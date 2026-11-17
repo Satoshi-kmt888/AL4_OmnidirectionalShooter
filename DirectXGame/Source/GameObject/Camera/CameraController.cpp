@@ -18,24 +18,45 @@ void CameraController::Initialize(Camera* camera) {
 	assert(camera);
 	m_camera = camera;
 
-	m_angle = 32.0f;
-	m_camera->rotation_.x = ConvertToRadian(m_angle);
-	m_camera->translation_.y = 20.0f;
-	m_camera->translation_.z = -32.0f;
+	m_pitch = 32.0f;
+	m_camera->rotation_.x = ConvertToRadian(m_pitch);
+
+	m_target_offset = {0.0f, 20.0f, -32.0f};
 }
 
 void CameraController::Update() {
-	//m_camera->translation_ = m_target_offset;
+	switch (m_mode) {
+		using enum Mode;
+	case MODE_FOLLOW:
+		UpdateFollow();
+		break;
+	default:
+		break;
+	}
 }
 
-void CameraController::ImGuiControl() {
+void CameraController::ControlImGui() {
 #ifdef USE_IMGUI
-	if (ImGui::CollapsingHeader("CameraController")) {
+	if (!ImGui::CollapsingHeader("CameraController")) {
+		return;
+	}
+
+	if (ImGui::TreeNode("common")) {
 		ImGui::DragFloat3("translation", &m_camera->translation_.x, 0.1f);
-		ImGui::DragFloat("angle", &m_angle, 0.1f);
-		m_camera->rotation_.x = ConvertToRadian(m_angle);
+		ImGui::DragFloat("pitch", &m_pitch, 0.1f);
+		m_camera->rotation_.x = ConvertToRadian(m_pitch);
+	}
+
+	if (ImGui::TreeNode("follow")) {
+		ImGui::DragFloat3("target offset", &m_target_offset.x, 0.01f);
+		ImGui::DragFloat("follow delay", &m_follow_delay, 0.01f);
 	}
 #endif
 }
 
 void CameraController::Reset() { m_camera->translation_ = m_target_offset; }
+
+void CameraController::UpdateFollow() {
+	Vector3 ideal_position = m_target->translation_ + m_target_offset;
+	m_camera->translation_ += (ideal_position - m_camera->translation_) * m_follow_delay;
+}

@@ -5,19 +5,19 @@
 /// <summary>
 /// Δタイム管理クラス
 /// </summary>
-class Clock {
+class Time {
 public:
 	//==================================================
 	// public methods
 	//==================================================
 
-	static Clock* GetInstance();
+	static Time* GetInstance();
 
 	// コピー・ムーブ禁止
-	Clock(const Clock&) = delete;
-	Clock& operator=(const Clock&) = delete;
-	Clock(Clock&&) = delete;
-	Clock& operator=(Clock&&) = delete;
+	Time(const Time&) = delete;
+	Time& operator=(const Time&) = delete;
+	Time(Time&&) = delete;
+	Time& operator=(Time&&) = delete;
 
 	void Update();
 
@@ -38,8 +38,8 @@ private:
 	// private methods
 	//==================================================
 
-	Clock() = default;
-	~Clock() = default;
+	Time() = default;
+	~Time() = default;
 
 	//==================================================
 	// private variables

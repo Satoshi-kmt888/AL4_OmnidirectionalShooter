@@ -32,6 +32,12 @@
     <Filter Include="Source\Scene\Wipe">
       <UniqueIdentifier>{2fe21d86-f018-4baa-a646-54ba2c8e5626}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject\Bullet">
+      <UniqueIdentifier>{64b52551-f399-4b42-85b8-1893ede89a03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Geometry">
+      <UniqueIdentifier>{83e6ed60-4537-4685-9aaf-07bbe466fe84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -67,7 +73,7 @@
     <ClCompile Include="Source\Input\InputAction.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Core\Clock.cpp">
+    <ClCompile Include="Source\Core\Time.cpp">
       <Filter>Source\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\Wipe\GridWipe.cpp">
@@ -78,6 +84,9 @@
     </ClCompile>
     <ClCompile Include="Source\Math\Easing.cpp">
       <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\Bullet\Bullet.cpp">
+      <Filter>Source\GameObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +126,7 @@
     <ClInclude Include="Source\Input\InputAction.h">
       <Filter>Source\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Core\Clock.h">
+    <ClInclude Include="Source\Core\Time.h">
       <Filter>Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\Wipe\GridWipe.h">
@@ -131,6 +140,15 @@
     </ClInclude>
     <ClInclude Include="Source\Math\Easing.h">
       <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\Bullet\Bullet.h">
+      <Filter>Source\GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Geometry\Sphere.h">
+      <Filter>Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Geometry\AABB.h">
+      <Filter>Source\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

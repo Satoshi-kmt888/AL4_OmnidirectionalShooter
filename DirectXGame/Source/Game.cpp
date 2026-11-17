@@ -1,6 +1,6 @@
 #include "Game.h"
 
-#include "Core/Clock.h"
+#include "Core/Time.h"
 #include "Scene/SceneManager.h"
 
 #include <2d/ImGuiManager.h>
@@ -33,7 +33,7 @@ bool Game::Initialize() {
 #endif
 
 	// Δタイム用クロックインスタンスを取得
-	m_clock = Clock::GetInstance();
+	m_clock = Time::GetInstance();
 
 	// シーンを初期化
 	m_scene = std::make_unique<SceneManager>();

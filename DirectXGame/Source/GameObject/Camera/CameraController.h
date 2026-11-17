@@ -29,7 +29,7 @@ public:
 	void Initialize(KamataEngine::Camera* camera);
 	void Update();
 
-	void ImGuiControl();
+	void ControlImGui();
 
 	void Reset();
 
@@ -40,16 +40,23 @@ private:
 	// private methods
 	//==================================================
 
+	void UpdateFollow();
+
 	//==================================================
 	// private variables
 	//==================================================
 
-	//操作するカメラのポインタ
+	Mode m_mode = Mode::MODE_FOLLOW;
+
+	// 操作するカメラのポインタ
 	KamataEngine::Camera* m_camera = nullptr;
 
-	//追従対象のワールド変換データ
+	float m_pitch = 0.0f; // 見下ろす角度(度)
+
+	/*--- 追従 ---*/
+
+	// 追従対象のワールド変換データ
 	const KamataEngine::WorldTransform* m_target = nullptr;
 	KamataEngine::Vector3 m_target_offset{};
-
-	float m_angle = 0.0f; //見下ろす角度(度)
+	float m_follow_delay = 0.16f;
 };

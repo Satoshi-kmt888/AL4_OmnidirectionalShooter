@@ -1,11 +1,11 @@
-#include "Clock.h"
+#include "Time.h"
 
-Clock* Clock::GetInstance() {
-	static Clock instance;
+Time* Time::GetInstance() {
+	static Time instance;
 	return &instance;
 }
 
-void Clock::Update() {
+void Time::Update() {
 	// 現在の時間を取得する
 	auto current_time = std::chrono::high_resolution_clock::now();
 	// 1フレーム目だけは別の処理
@@ -27,7 +27,7 @@ void Clock::Update() {
 	m_accumulator += m_delta_time;
 }
 
-bool Clock::IsFixedUpdateRequired() {
+bool Time::IsFixedUpdateRequired() {
 	// 蓄積器にたまった時間が溢れたら
 	if (m_accumulator >= k_fixed_delta_time) {
 		// 蓄積器を空にする
