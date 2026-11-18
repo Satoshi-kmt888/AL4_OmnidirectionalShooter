@@ -84,7 +84,7 @@ private:
 
 	// デバッグカメラの有効化
 	bool m_is_debug_camera_enabled = false;
-	uint32_t m_max_enemy = 1;
+	uint32_t m_max_enemy = 5;
 
 	/*--- ゲームオブジェクト ---*/
 

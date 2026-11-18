@@ -1,5 +1,6 @@
 #include "Enemy.h"
 
+#include "Core/Random.h"
 #include "Geometry/OBB.h"
 #include "Math/MathUtility.h"
 
@@ -49,6 +50,12 @@ OBB Enemy::GetOBB() const {
 }
 
 void Enemy::OnCollision() { m_is_alive = false; }
+
+void Enemy::Spawn() {
+	m_world_transform.translation_ = {Random::Range<float>(-10.0f, 10.0f), 0.0f, Random::Range<float>(-10.0f, 10.0f)};
+
+	m_is_alive = true;
+}
 
 void Enemy::SetModel(KamataEngine::Model* model) {
 	assert(model);

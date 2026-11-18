@@ -87,6 +87,7 @@ void GameScene::Enter() {
 	for (uint32_t i = 0; i < m_max_enemy; ++i) {
 		m_enemies[i] = std::make_unique<Enemy>();
 		m_enemies[i]->Initialize();
+		m_enemies[i]->Spawn();
 	}
 
 	//=========================================================
@@ -216,6 +217,18 @@ void GameScene::ControlImGui() {
 // ゲームシーンのImGui操作はここに集約する
 #ifdef USE_IMGUI
 	ImGui::Begin("GameScene");
+	if (ImGui::CollapsingHeader("Common")) {
+		// 敵のスポーン
+		if (ImGui::Button("Enemy Spawn")) {
+			for (const auto& enemy : m_enemies) {
+				if (!enemy || !enemy->IsAlive()) {
+					enemy->Spawn();
+					break;
+				}
+			}
+		}
+	}
+
 	m_camera_controller->ControlImGui();
 	m_player->ControlImGui();
 	ImGui::End();
@@ -234,13 +247,6 @@ void GameScene::ChangeState() {
 		if (!m_player->IsAlive()) {
 			m_wipe->Start(WipeType::TYPE_GRID, WipeState::STATE_FADE_IN, m_wipe_duration, TextureManager::Load("white1x1.png"));
 			m_state = STATE_CLOSING;
-		}
-
-		for (const auto& enemy : m_enemies) {
-			if (!enemy || !enemy->IsAlive()) {
-				m_wipe->Start(WipeType::TYPE_GRID, WipeState::STATE_FADE_IN, m_wipe_duration, TextureManager::Load("white1x1.png"));
-				m_state = STATE_CLOSING;
-			}
 		}
 		break;
 	case STATE_CLOSING:

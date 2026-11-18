@@ -199,6 +199,7 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     <ClCompile Include="Source\Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Core\Random.h" />
     <ClInclude Include="Source\Geometry\OBB.h" />
     <ClInclude Include="Source\GameObject\Enemy\Enemy.h" />
     <ClInclude Include="Source\GameObject\Bullet\Bullet.h" />
