@@ -37,7 +37,7 @@ void Player::Update() {
 	BulletShot();
 
 	m_world_transform.translation_ += m_velocity * Time::GetInstance()->GetDeltaTime();
-	WorldTransformUpdate(m_world_transform);
+	UpdateWorldTransform(m_world_transform);
 }
 
 void Player::Draw(const Camera* camera) {

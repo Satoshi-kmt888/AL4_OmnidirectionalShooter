@@ -2,6 +2,7 @@
 
 #include "GameObject/Camera/CameraController.h"
 #include "GameObject/Camera/DebugCamera.h"
+#include "GameObject/Enemy/Enemy.h"
 #include "GameObject/Player/Player.h"
 #include "GameObject/World/Ground.h"
 #include "GameObject/World/SkySphere.h"
@@ -75,6 +76,15 @@ void GameScene::Enter() {
 	m_camera_controller->Initialize(&m_camera);
 	m_camera_controller->SetTarget(&m_player->GetWorldTransform());
 
+	/*--- 敵 ---*/
+
+	Enemy::SetModel(Model::CreateFromOBJ("axis"));
+	m_enemies.resize(m_max_enemy);
+	for (uint32_t i = 0; i < m_max_enemy; ++i) {
+		m_enemies[i] = std::make_unique<Enemy>();
+		m_enemies[i]->Initialize();
+	}
+
 	//=========================================================
 	// effect
 	//=========================================================
@@ -104,6 +114,12 @@ void GameScene::Update() {
 
 	m_player->Update();
 	m_camera_controller->Update();
+
+	for (const auto& enemy : m_enemies) {
+		if (enemy) {
+			enemy->Update();
+		}
+	}
 
 #ifdef DEVELOP
 	if (m_axis) {
@@ -165,6 +181,12 @@ void GameScene::DrawModel() {
 	m_ground->Draw(&m_camera);
 
 	m_player->Draw(&m_camera);
+
+	for (const auto& enemy : m_enemies) {
+		if (enemy) {
+			enemy->Draw(&m_camera);
+		}
+	}
 
 	//-------------------------
 	// モデル描画後処理

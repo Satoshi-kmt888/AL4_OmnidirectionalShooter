@@ -2,6 +2,7 @@
 
 #include <3d/WorldTransform.h>
 #include <array>
+#include <cstdint>
 #include <math/Vector3.h>
 #include <memory>
 
@@ -72,7 +73,7 @@ private:
 
 	/*--- 弾 ---*/
 
-	static inline const int k_max_bullet = 32;
+	static inline const uint32_t k_max_bullet = 32;
 	std::array<std::unique_ptr<Bullet>, k_max_bullet> m_bullets;
 	KamataEngine::Vector3 m_bullet_velocity = {0.0f, 0.0f, 24.0f};
 	float m_bullet_shot_interval = 0.5f;

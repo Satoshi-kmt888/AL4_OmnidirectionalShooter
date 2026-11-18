@@ -157,7 +157,7 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotation, const 
 	return MakeScaleMatrix(scale) * MakeRotateXYZMatrix(rotation) * MakeTranslateMatrix(translation);
 }
 
-void WorldTransformUpdate(WorldTransform& world_transform) {
+void UpdateWorldTransform(WorldTransform& world_transform) {
 	// SRTを合成してアフィン変換行列を計算する
 	world_transform.matWorld_ = MakeAffineMatrix(world_transform.scale_, world_transform.rotation_, world_transform.translation_);
 

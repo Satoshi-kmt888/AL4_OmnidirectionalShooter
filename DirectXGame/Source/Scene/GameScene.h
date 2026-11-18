@@ -3,7 +3,9 @@
 #include "IScene.h"
 
 #include <3d/Camera.h>
+#include <cstdint>
 #include <memory>
+#include <vector>
 
 namespace KamataEngine {
 class Input;
@@ -17,6 +19,7 @@ class Skysphere;
 class Ground;
 class Player;
 class CameraController;
+class Enemy;
 
 /// <summary>
 /// ゲームシーン
@@ -64,6 +67,7 @@ private:
 	// private variables
 	//=========================================================
 
+	// 状態
 	State m_state = State::STATE_OPENING;
 
 	// 入力
@@ -75,7 +79,9 @@ private:
 	KamataEngine::Input* m_input = nullptr;
 	KamataEngine::AxisIndicator* m_axis = nullptr;
 
-	bool m_is_debug_camera_enabled = false; // デバッグカメラの有効化
+	// デバッグカメラの有効化
+	bool m_is_debug_camera_enabled = false;
+	uint32_t m_max_enemy = 1;
 
 	/*--- ゲームオブジェクト ---*/
 
@@ -84,6 +90,7 @@ private:
 	std::unique_ptr<Ground> m_ground;
 	std::unique_ptr<Player> m_player;
 	std::unique_ptr<CameraController> m_camera_controller;
+	std::vector<std::unique_ptr<Enemy>> m_enemies;
 
 	/*--- 演出 ---*/
 

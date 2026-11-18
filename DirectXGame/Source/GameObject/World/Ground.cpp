@@ -19,6 +19,6 @@ void Ground::Initialize(Model* model) {
 	m_world_transform.Initialize();
 }
 
-void Ground::Update() { MathUtility::WorldTransformUpdate(m_world_transform); }
+void Ground::Update() { MathUtility::UpdateWorldTransform(m_world_transform); }
 
 void Ground::Draw(const Camera* camera) { m_model->Draw(m_world_transform, *camera); }

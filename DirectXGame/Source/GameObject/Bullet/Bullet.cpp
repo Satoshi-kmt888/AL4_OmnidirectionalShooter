@@ -29,7 +29,7 @@ void Bullet::Update() {
 	m_world_transform.scale_ = {s_scale, s_scale, s_scale};
 #endif
 	m_world_transform.translation_ += m_velocity * Time::GetInstance()->GetDeltaTime();
-	WorldTransformUpdate(m_world_transform);
+	UpdateWorldTransform(m_world_transform);
 }
 
 void Bullet::Draw(const Camera* camera) const { s_model->Draw(m_world_transform, *camera); }
@@ -56,5 +56,5 @@ void Bullet::Fire(const Vector3& position, const Vector3& velocity) {
 	m_is_shot = true;
 
 	// 即座にワールド変換データの更新を入れ、描画や判定ずれを防ぐ
-	WorldTransformUpdate(m_world_transform);
+	UpdateWorldTransform(m_world_transform);
 }

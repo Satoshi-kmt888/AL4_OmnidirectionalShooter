@@ -60,5 +60,5 @@ KamataEngine::Matrix4x4 MakeTranslateMatrix(const KamataEngine::Vector3& transla
 KamataEngine::Matrix4x4 MakeAffineMatrix(const KamataEngine::Vector3& scale, const KamataEngine::Vector3& rotation, const KamataEngine::Vector3& translation) noexcept;
 
 // トランスフォームを更新する
-void WorldTransformUpdate(KamataEngine::WorldTransform& world_transform);
+void UpdateWorldTransform(KamataEngine::WorldTransform& world_transform);
 } // namespace MathUtility

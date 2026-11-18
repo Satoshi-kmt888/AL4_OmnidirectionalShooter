@@ -54,6 +54,7 @@ private:
 	// public variables
 	//=========================================================
 
+	// モデル(同じモデルを使う)
 	static inline KamataEngine::Model* s_model = nullptr;
 	KamataEngine::WorldTransform m_world_transform{};
 
