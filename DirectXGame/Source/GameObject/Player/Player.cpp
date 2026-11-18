@@ -9,6 +9,7 @@
 #include <3d/Model.h>
 #include <cassert>
 #include <imgui.h>
+#include <numbers>
 
 using namespace KamataEngine;
 using namespace MathUtility;
@@ -93,8 +94,14 @@ Bullet* Player::GetBullet(size_t index) {
 }
 
 void Player::Move() {
-	m_velocity.x = m_input->GetMoveAxis().x * m_move_speed;
-	m_velocity.z = m_input->GetMoveAxis().y * m_move_speed;
+	Vector2 axis = m_input->GetMoveAxis();
+	m_velocity.x = axis.x * m_move_speed;
+	m_velocity.z = axis.y * m_move_speed;
+
+	if (axis != Vector2{0.0f, 0.0f}) {
+		float target_angle = std::atan2(axis.x, axis.y);
+		m_world_transform.rotation_.y = target_angle + std::numbers::pi_v<float>;
+	}
 }
 
 void Player::BulletShot() {
@@ -107,7 +114,13 @@ void Player::BulletShot() {
 			for (const auto& bullet : m_bullets) {
 				if (!bullet->IsAlive()) {
 					m_bullet_cool_timer = m_bullet_shot_interval;
-					bullet->Fire(m_world_transform.translation_, m_bullet_velocity);
+
+					// 正面を求める
+					Vector3 forward = {m_world_transform.matWorld_.m[2][0], m_world_transform.matWorld_.m[2][1], m_world_transform.matWorld_.m[2][2]};
+					forward = Normalize(forward);
+
+					Vector3 bullet_velocity = -forward * m_bullet_speed;
+					bullet->Fire(m_world_transform.translation_, bullet_velocity);
 
 					break;
 				}

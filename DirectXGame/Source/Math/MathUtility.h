@@ -1,6 +1,7 @@
 #pragma once
 
 namespace KamataEngine {
+struct Vector2;
 struct Vector3;
 struct Matrix4x4;
 class WorldTransform;
@@ -26,6 +27,9 @@ KamataEngine::Vector3& operator+=(KamataEngine::Vector3& v1, const KamataEngine:
 KamataEngine::Vector3& operator-=(KamataEngine::Vector3& v1, const KamataEngine::Vector3& v2);
 KamataEngine::Vector3& operator*=(KamataEngine::Vector3& v, float scalar);
 KamataEngine::Vector3& operator/=(KamataEngine::Vector3& v, float scalar);
+
+// ベクトル 比較演算子のオーバーロード
+bool operator==(const KamataEngine::Vector2& v1, const KamataEngine::Vector2& v2);
 
 float LengthSquared(const KamataEngine::Vector3& vector);
 // ベクトルの長さを求める

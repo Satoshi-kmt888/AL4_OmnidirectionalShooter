@@ -5,6 +5,7 @@
 #include <cassert>
 #include <cmath>
 #include <math/Matrix4x4.h>
+#include <math/Vector2.h>
 #include <math/Vector3.h>
 #include <numbers>
 
@@ -109,6 +110,8 @@ Vector3& operator/=(Vector3& v, float scalar) {
 	v.z /= scalar;
 	return v;
 }
+
+bool operator==(const Vector2& v1, const Vector2& v2) { return v1.x == v2.x && v1.y == v2.y; }
 
 float LengthSquared(const Vector3& vector) { return (vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z); }
 
