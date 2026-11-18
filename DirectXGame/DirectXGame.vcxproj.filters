@@ -38,6 +38,12 @@
     <Filter Include="Source\Geometry">
       <UniqueIdentifier>{83e6ed60-4537-4685-9aaf-07bbe466fe84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject\Enemy">
+      <UniqueIdentifier>{0e467181-ab58-4fc2-bc48-7d98b2f3a872}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Physics">
+      <UniqueIdentifier>{5f753eea-65a1-40b0-9d7a-567875f75fec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -87,6 +93,12 @@
     </ClCompile>
     <ClCompile Include="Source\GameObject\Bullet\Bullet.cpp">
       <Filter>Source\GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\Enemy\Enemy.cpp">
+      <Filter>Source\GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics\Collision.cpp">
+      <Filter>Source\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +161,15 @@
     </ClInclude>
     <ClInclude Include="Source\Geometry\AABB.h">
       <Filter>Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\Enemy\Enemy.h">
+      <Filter>Source\GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Geometry\OBB.h">
+      <Filter>Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics\Collision.h">
+      <Filter>Source\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

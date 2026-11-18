@@ -1,12 +1,16 @@
 #include "GameScene.h"
 
+#include "GameObject/Bullet/Bullet.h"
 #include "GameObject/Camera/CameraController.h"
 #include "GameObject/Camera/DebugCamera.h"
 #include "GameObject/Enemy/Enemy.h"
 #include "GameObject/Player/Player.h"
 #include "GameObject/World/Ground.h"
 #include "GameObject/World/SkySphere.h"
+#include "Geometry/OBB.h"
+#include "Geometry/Sphere.h"
 #include "Input/InputAction.h"
+#include "Physics/Collision.h"
 #include "Wipe/WipeManager.h"
 
 #include <2d/Sprite.h>
@@ -121,6 +125,8 @@ void GameScene::Update() {
 		}
 	}
 
+	CheckCollisions();
+
 #ifdef DEVELOP
 	if (m_axis) {
 		// 軸表示を更新
@@ -231,5 +237,27 @@ void GameScene::ChangeState() {
 			RequestSceneChange(SceneType::SCENE_TITLE);
 		}
 		break;
+	}
+}
+
+void GameScene::CheckCollisions() {
+	//
+	for (size_t bullet_index = 0; bullet_index < m_player->GetMaxBullet(); ++bullet_index) {
+		Bullet* bullet = m_player->GetBullet(bullet_index);
+		if (!bullet || !bullet->IsAlive()) {
+			continue;
+		}
+
+		for (const auto& enemy : m_enemies) {
+			if (!enemy || !enemy->IsAlive()) {
+				continue;
+			}
+
+			if (Collision::IsCollision(enemy->GetOBB(), bullet->GetSphere())) {
+				bullet->OnCollision();
+				enemy->OnCollision();
+				break;
+			}
+		}
 	}
 }

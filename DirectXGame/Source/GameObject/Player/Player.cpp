@@ -44,7 +44,7 @@ void Player::Draw(const Camera* camera) {
 	m_model_group.player->Draw(m_world_transform, *camera);
 
 	for (const auto& bullet : m_bullets) {
-		if (bullet->IsShot()) {
+		if (bullet->IsAlive()) {
 			bullet->Draw(camera);
 		}
 	}
@@ -60,6 +60,14 @@ void Player::ControlImGui() {
 #endif
 }
 
+Bullet* Player::GetBullet(size_t index) {
+	if (index < k_max_bullet) {
+		return m_bullets[index].get();
+	}
+
+	return nullptr;
+}
+
 void Player::Move() {
 	m_velocity.x = m_input->GetMoveAxis().x * m_move_speed;
 	m_velocity.z = m_input->GetMoveAxis().y * m_move_speed;
@@ -73,7 +81,7 @@ void Player::BulletShot() {
 	if (m_input->IsPress(Action::ACTION_ATTACK)) {
 		if (m_bullet_cool_timer <= 0.0f) {
 			for (const auto& bullet : m_bullets) {
-				if (!bullet->IsShot()) {
+				if (!bullet->IsAlive()) {
 					m_bullet_cool_timer = m_bullet_shot_interval;
 					bullet->Fire(m_world_transform.translation_, m_bullet_velocity);
 
@@ -84,7 +92,7 @@ void Player::BulletShot() {
 	}
 
 	for (const auto& bullet : m_bullets) {
-		if (bullet->IsShot()) {
+		if (bullet->IsAlive()) {
 			bullet->Update();
 		}
 	}

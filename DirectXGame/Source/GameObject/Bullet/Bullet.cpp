@@ -21,7 +21,7 @@ void Bullet::Update() {
 	m_current_time += Time::GetInstance()->GetDeltaTime();
 	if (m_current_time >= s_life_time) {
 		m_current_time = 0.0f;
-		m_is_shot = false;
+		m_is_alive = false;
 	}
 
 #ifdef DEVELOP
@@ -34,7 +34,14 @@ void Bullet::Update() {
 
 void Bullet::Draw(const Camera* camera) const { s_model->Draw(m_world_transform, *camera); }
 
-Sphere Bullet::GetSphere() const { return Sphere{m_world_transform.translation_, s_scale}; }
+Sphere Bullet::GetSphere() const {
+	return Sphere{
+	    .center = m_world_transform.translation_,
+	    .radius = s_scale,
+	};
+}
+
+void Bullet::OnCollision() { m_is_alive = false; }
 
 void Bullet::SetModel(Model* model) { s_model = model; }
 
@@ -53,7 +60,7 @@ void Bullet::Fire(const Vector3& position, const Vector3& velocity) {
 	m_world_transform.translation_ = position;
 	m_velocity = velocity;
 
-	m_is_shot = true;
+	m_is_alive = true;
 
 	// 即座にワールド変換データの更新を入れ、描画や判定ずれを防ぐ
 	UpdateWorldTransform(m_world_transform);

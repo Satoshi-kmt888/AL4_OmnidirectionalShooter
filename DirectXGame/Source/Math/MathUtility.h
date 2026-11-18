@@ -44,6 +44,9 @@ KamataEngine::Matrix4x4 operator*(const KamataEngine::Matrix4x4& m1, const Kamat
 // 単位行列を求める
 KamataEngine::Matrix4x4 MakeIdentityMatrix();
 
+// 逆行列を求める
+KamataEngine::Matrix4x4 InverseMatrix(const KamataEngine::Matrix4x4& matrix);
+
 // 拡縮行列を求める
 KamataEngine::Matrix4x4 MakeScaleMatrix(const KamataEngine::Vector3& scale) noexcept;
 
@@ -61,4 +64,6 @@ KamataEngine::Matrix4x4 MakeAffineMatrix(const KamataEngine::Vector3& scale, con
 
 // トランスフォームを更新する
 void UpdateWorldTransform(KamataEngine::WorldTransform& world_transform);
+// ベクトル変換
+KamataEngine::Vector3 Transform(const KamataEngine::Vector3& v, const KamataEngine::Matrix4x4& m);
 } // namespace MathUtility

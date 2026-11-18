@@ -32,18 +32,19 @@ public:
 
 	// 当たり判定用
 	Sphere GetSphere() const;
+	void OnCollision();
 
 	//=========================================================
 	// accessor
 	//=========================================================
 
-	bool IsShot() const { return m_is_shot; }
+	bool IsAlive() const { return m_is_alive; }
 
 	//---------------------------------------------------------
 
 	static void SetModel(KamataEngine::Model* model);
 
-	void SetIsShot(bool is_shot) { m_is_shot = is_shot; }
+	void SetIsAlive(bool is_alive) { m_is_alive = is_alive; }
 
 private:
 	//=========================================================
@@ -62,7 +63,7 @@ private:
 
 	static inline float s_scale = 0.5f;
 
-	bool m_is_shot = false;
+	bool m_is_alive = false;
 	static inline float s_life_time = 3.0f;
 	float m_current_time = 0.0f;
 };

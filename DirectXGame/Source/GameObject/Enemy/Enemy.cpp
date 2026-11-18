@@ -1,5 +1,6 @@
 #include "Enemy.h"
 
+#include "Geometry/OBB.h"
 #include "Math/MathUtility.h"
 
 #include <3d/Model.h>
@@ -12,11 +13,37 @@ Enemy::Enemy() = default;
 
 Enemy::~Enemy() = default;
 
-void Enemy::Initialize() { m_world_transform.Initialize(); }
+void Enemy::Initialize() {
+	m_world_transform.Initialize();
 
-void Enemy::Update() { UpdateWorldTransform(m_world_transform); }
+	m_is_alive = true;
+}
 
-void Enemy::Draw(const Camera* camera) const { m_model->Draw(m_world_transform, *camera); }
+void Enemy::Update() {
+	if (!m_is_alive) {
+		return;
+	}
+
+	UpdateWorldTransform(m_world_transform);
+}
+
+void Enemy::Draw(const Camera* camera) const {
+	if (!m_is_alive) {
+		return;
+	}
+
+	m_model->Draw(m_world_transform, *camera);
+}
+
+OBB Enemy::GetOBB() const {
+	return OBB{
+	    .center = m_world_transform.translation_,
+	    .orientations = {m_world_transform.rotation_.x, m_world_transform.rotation_.y, m_world_transform.rotation_.z},
+	    .size = m_world_transform.scale_,
+	};
+}
+
+void Enemy::OnCollision() { m_is_alive = false; }
 
 void Enemy::SetModel(KamataEngine::Model* model) {
 	assert(model);

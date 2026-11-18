@@ -7,6 +7,8 @@ class Camera;
 class Model;
 } // namespace KamataEngine
 
+struct OBB;
+
 /// <summary>
 /// 敵
 /// </summary>
@@ -23,9 +25,14 @@ public:
 	void Update();
 	void Draw(const KamataEngine::Camera* camera) const;
 
+	OBB GetOBB() const;
+	void OnCollision();
+
 	//=========================================================
 	// accessor
 	//=========================================================
+
+	bool IsAlive() const { return m_is_alive; }
 
 	//---------------------------------------------------------
 
@@ -44,4 +51,6 @@ private:
 	static inline KamataEngine::Model* m_model = nullptr;
 
 	KamataEngine::WorldTransform m_world_transform{};
+
+	bool m_is_alive = false;
 };

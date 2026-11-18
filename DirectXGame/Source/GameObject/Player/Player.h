@@ -44,6 +44,11 @@ public:
 
 	const KamataEngine::WorldTransform& GetWorldTransform() const { return m_world_transform; }
 
+	size_t GetMaxBullet() const { return k_max_bullet; }
+	Bullet* GetBullet(size_t index);
+
+	//---------------------------------------------------------
+
 private:
 	//=========================================================
 	// private methods

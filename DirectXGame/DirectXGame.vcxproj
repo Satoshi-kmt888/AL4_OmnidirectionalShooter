@@ -191,12 +191,14 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     <ClCompile Include="Source\Input\InputAction.cpp" />
     <ClCompile Include="Source\Math\Easing.cpp" />
     <ClCompile Include="Source\Math\MathUtility.cpp" />
+    <ClCompile Include="Source\Physics\Collision.cpp" />
     <ClCompile Include="Source\Scene\GameScene.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Scene\Wipe\GridWipe.cpp" />
     <ClCompile Include="Source\Scene\Wipe\WipeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Geometry\OBB.h" />
     <ClInclude Include="Source\GameObject\Enemy\Enemy.h" />
     <ClInclude Include="Source\GameObject\Bullet\Bullet.h" />
     <ClInclude Include="Source\Core\Time.h" />
@@ -211,6 +213,7 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     <ClInclude Include="Source\Input\InputAction.h" />
     <ClInclude Include="Source\Math\Easing.h" />
     <ClInclude Include="Source\Math\MathUtility.h" />
+    <ClInclude Include="Source\Physics\Collision.h" />
     <ClInclude Include="Source\Scene\GameScene.h" />
     <ClInclude Include="Source\Scene\IScene.h" />
     <ClInclude Include="Source\Scene\SceneManager.h" />

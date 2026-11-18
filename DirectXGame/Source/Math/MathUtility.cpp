@@ -1,12 +1,62 @@
 #include "MathUtility.h"
 
 #include <3d/WorldTransform.h>
+#include <array>
+#include <cassert>
 #include <cmath>
 #include <math/Matrix4x4.h>
 #include <math/Vector3.h>
 #include <numbers>
 
 using namespace KamataEngine;
+
+namespace {
+/// <summary>
+/// 作業用配列4x8を初期化する
+/// </summary>
+/// <param name="matrix"></param>
+/// <returns></returns>
+/// 左側4x4: 逆行列を求めたい行列
+/// 右側4x4: 単位行列
+std::array<std::array<float, 8>, 4> MakeWorkMatrix(const Matrix4x4& matrix) {
+	std::array<std::array<float, 8>, 4> work{};
+	for (int row = 0; row < 4; ++row) {
+		for (size_t col = 0; col < 4; ++col) {
+			work[row][col] = matrix.m[row][col];
+			work[row][col + 4] = (row == col) ? 1.0f : 0.0f;
+		}
+	}
+
+	return work;
+}
+
+/// <summary>
+/// ピボット選択と入れ替えを行う
+/// </summary>
+/// <param name="work"></param>
+/// <param name="index"></param>
+/// <returns></returns>
+bool PivotAndSwap(std::array<std::array<float, 8>, 4>& work, int index) {
+	if (float pivot = work[index][index]; std::abs(pivot) >= 1e-8f) {
+		return true;
+	}
+
+	int swap_row = -1;
+	for (int row = 0; row < 4; ++row) {
+		if (std::abs(work[row][index]) > 1e-8f) {
+			swap_row = row;
+			break;
+		}
+	}
+
+	if (swap_row == -1) {
+		return false; // 逆行列が存在しない
+	}
+
+	std::swap(work[index], work[swap_row]);
+	return true;
+}
+} // namespace
 
 namespace MathUtility {
 float ConvertToRadian(float degree) {
@@ -98,6 +148,47 @@ Matrix4x4 MakeIdentityMatrix() {
 	return result;
 }
 
+KamataEngine::Matrix4x4 InverseMatrix(const Matrix4x4& matrix) {
+	// 求める行列+単位行列の4x8行列を作成
+	auto work = MakeWorkMatrix(matrix);
+
+	// ガウスジョルダン法による掃き出し
+	for (int i = 0; i < 4; ++i) {
+		if (!PivotAndSwap(work, i)) {
+			return MakeIdentityMatrix();
+		}
+
+		float inv_pivot = 1.0f / work[i][i];
+
+		// 注目している行全体をピボットで割る
+		for (int col = 0; col < 8; ++col) {
+			work[i][col] *= inv_pivot;
+		}
+
+		// 他の行の該当列を0にする
+		for (int row = 0; row < 4; ++row) {
+			if (row == i) {
+				continue;
+			}
+
+			float factor = work[row][i];
+			for (int col = 0; col < 8; ++col) {
+				work[row][col] -= factor * work[i][col];
+			}
+		}
+	}
+
+	// 計算した行列のうち、行列の右側部分が逆行列なので結果に格納する
+	Matrix4x4 result{};
+	for (int row = 0; row < 4; ++row) {
+		for (size_t col = 0; col < 4; ++col) {
+			result.m[row][col] = work[row][col + 4];
+		}
+	}
+
+	return result;
+}
+
 Matrix4x4 MakeScaleMatrix(const Vector3& scale) noexcept {
 	Matrix4x4 result = MakeIdentityMatrix();
 
@@ -167,5 +258,17 @@ void UpdateWorldTransform(WorldTransform& world_transform) {
 
 	// 定数バッファへの書き込み
 	world_transform.TransferMatrix();
+}
+Vector3 Transform(const Vector3& v, const Matrix4x4& m) {
+	Vector3 result{};
+
+	result.x = v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + 1.0f * m.m[3][0];
+	result.y = v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + 1.0f * m.m[3][1];
+	result.z = v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + 1.0f * m.m[3][2];
+	float w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + 1.0f * m.m[3][3];
+
+	assert(w != 0.0f);
+
+	return result /= w;
 }
 } // namespace MathUtility
