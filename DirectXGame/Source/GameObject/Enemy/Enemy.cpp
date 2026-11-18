@@ -16,7 +16,6 @@ Enemy::~Enemy() = default;
 
 void Enemy::Initialize() {
 	m_world_transform.Initialize();
-	m_world_transform.translation_ = {0.0f, 0.0f, 10.0f};
 
 	m_is_alive = true;
 }
@@ -45,14 +44,14 @@ OBB Enemy::GetOBB() const {
 	return OBB{
 	    .center = m_world_transform.translation_,
 	    .orientations = {Normalize(axis_x), Normalize(axis_y), Normalize(axis_z)},
-	    .size = m_world_transform.scale_ * 0.5f,
+	    .size = {(m_width * 0.5f),  (m_height * 0.5f), (m_depth * 0.5f) },
 	};
 }
 
 void Enemy::OnCollision() { m_is_alive = false; }
 
 void Enemy::Spawn() {
-	m_world_transform.translation_ = {Random::Range<float>(-10.0f, 10.0f), 0.0f, Random::Range<float>(-10.0f, 10.0f)};
+	m_world_transform.translation_ = {Random::Range<float>(-10.0f, 10.0f), m_height, Random::Range<float>(-10.0f, 10.0f)};
 
 	m_is_alive = true;
 }

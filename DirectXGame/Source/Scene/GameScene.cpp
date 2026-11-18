@@ -67,7 +67,7 @@ void GameScene::Enter() {
 
 	// モデル群を作成
 	Player::ModelGroup player_models{
-	    .player = Model::CreateFromOBJ("cube"),
+	    .player = Model::CreateFromOBJ("player"),
 	    .bullet = Model::CreateSphere(),
 	};
 

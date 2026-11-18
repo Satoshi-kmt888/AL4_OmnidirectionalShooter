@@ -22,6 +22,7 @@ void Player::Initialize(const InputAction* input, const ModelGroup& model_group)
 	m_model_group = model_group;
 
 	m_world_transform.Initialize();
+	m_world_transform.translation_.y = m_height * 0.5f;
 
 	/*--- 弾 ---*/
 
@@ -77,7 +78,7 @@ OBB Player::GetOBB() const {
 	return OBB{
 	    .center = m_world_transform.translation_,
 	    .orientations = {Normalize(axis_x), Normalize(axis_y), Normalize(axis_z)},
-	    .size = m_world_transform.scale_ * 0.5f,
+	    .size = {(m_width * 0.5f),  (m_height * 0.5f), (m_depth * 0.5f) },
 	};
 }
 

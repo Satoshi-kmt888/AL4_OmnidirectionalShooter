@@ -55,4 +55,10 @@ private:
 	KamataEngine::WorldTransform m_world_transform{};
 
 	bool m_is_alive = false;
+
+	/*--- 当たり判定 ---*/
+
+	float m_width = 2.0f;
+	float m_height = 2.0f;
+	float m_depth = 2.0f;
 };

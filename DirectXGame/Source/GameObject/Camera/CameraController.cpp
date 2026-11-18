@@ -18,10 +18,10 @@ void CameraController::Initialize(Camera* camera) {
 	assert(camera);
 	m_camera = camera;
 
-	m_pitch = 32.0f;
+	m_pitch = 38.0f;
 	m_camera->rotation_.x = ConvertToRadian(m_pitch);
 
-	m_target_offset = {0.0f, 20.0f, -32.0f};
+	m_target_offset = {0.0f, 18.0f, -24.0f};
 }
 
 void CameraController::Update() {
@@ -45,11 +45,13 @@ void CameraController::ControlImGui() {
 		ImGui::DragFloat3("translation", &m_camera->translation_.x, 0.1f);
 		ImGui::DragFloat("pitch", &m_pitch, 0.1f);
 		m_camera->rotation_.x = ConvertToRadian(m_pitch);
+		ImGui::TreePop();
 	}
 
 	if (ImGui::TreeNode("follow")) {
 		ImGui::DragFloat3("target offset", &m_target_offset.x, 0.01f);
 		ImGui::DragFloat("follow delay", &m_follow_delay, 0.01f);
+		ImGui::TreePop();
 	}
 #endif
 }

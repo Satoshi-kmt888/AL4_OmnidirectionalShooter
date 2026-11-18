@@ -72,7 +72,7 @@ private:
 	// 入力
 	const InputAction* m_input = nullptr;
 
-	// モデル
+	// モデル群
 	ModelGroup m_model_group{};
 
 	// ワールド変換データ
@@ -80,10 +80,16 @@ private:
 
 	bool m_is_alive = true;
 
+	/*--- 当たり判定 ---*/
+
+	float m_width = 1.9f;
+	float m_height = 2.0f;
+	float m_depth = 1.9f;
+
 	/*--- 移動 ---*/
 
 	KamataEngine::Vector3 m_velocity{};
-	float m_move_speed = 16.0f;
+	float m_move_speed = 10.0f;
 
 	/*--- 弾 ---*/
 
