@@ -196,6 +196,7 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Scene\Wipe\GridWipe.cpp" />
     <ClCompile Include="Source\Scene\Wipe\WipeManager.cpp" />
+    <ClCompile Include="Source\Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Geometry\OBB.h" />
@@ -221,6 +222,7 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
     <ClInclude Include="Source\Scene\Wipe\GridWipe.h" />
     <ClInclude Include="Source\Scene\Wipe\IWipe.h" />
     <ClInclude Include="Source\Scene\Wipe\WipeManager.h" />
+    <ClInclude Include="Source\Scene\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

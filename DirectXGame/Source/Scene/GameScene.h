@@ -97,7 +97,7 @@ private:
 
 	/*--- 演出 ---*/
 
-	const float m_wipe_duration = 0.8f;
-
+	//ワイプ
 	std::unique_ptr<WipeManager> m_wipe;
+	const float m_wipe_duration = 0.8f;
 };

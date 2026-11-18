@@ -231,6 +231,17 @@ void GameScene::ChangeState() {
 		}
 		break;
 	case STATE_GAME:
+		if (!m_player->IsAlive()) {
+			m_wipe->Start(WipeType::TYPE_GRID, WipeState::STATE_FADE_IN, m_wipe_duration, TextureManager::Load("white1x1.png"));
+			m_state = STATE_CLOSING;
+		}
+
+		for (const auto& enemy : m_enemies) {
+			if (!enemy || !enemy->IsAlive()) {
+				m_wipe->Start(WipeType::TYPE_GRID, WipeState::STATE_FADE_IN, m_wipe_duration, TextureManager::Load("white1x1.png"));
+				m_state = STATE_CLOSING;
+			}
+		}
 		break;
 	case STATE_CLOSING:
 		if (m_wipe->IsFinished()) {

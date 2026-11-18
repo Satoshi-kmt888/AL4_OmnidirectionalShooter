@@ -49,9 +49,7 @@ void GridWipe::Update() {
 }
 
 void GridWipe::Draw() {
-	if (m_is_finished) {
-		return;
+	if (m_sprite) {
+		m_sprite->Draw();
 	}
-
-	m_sprite->Draw();
 }

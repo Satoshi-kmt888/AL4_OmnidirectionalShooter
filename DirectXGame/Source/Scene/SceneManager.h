@@ -50,7 +50,7 @@ private:
 	// private variables
 	//==================================================
 
-	static inline const SceneType k_first_scene = SceneType::SCENE_GAME;
+	static inline const SceneType k_first_scene = SceneType::SCENE_TITLE;
 
 	std::unique_ptr<IScene> m_current_scene;
 };
