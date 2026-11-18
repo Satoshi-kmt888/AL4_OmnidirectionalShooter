@@ -2,6 +2,7 @@
 
 #include "Core/Time.h"
 #include "GameObject/Bullet/Bullet.h"
+#include "Geometry/OBB.h"
 #include "Input/InputAction.h"
 #include "Math/MathUtility.h"
 
@@ -32,6 +33,10 @@ void Player::Initialize(const InputAction* input, const ModelGroup& model_group)
 }
 
 void Player::Update() {
+	if (!m_is_alive) {
+		return;
+	}
+
 	Move();
 
 	BulletShot();
@@ -41,6 +46,10 @@ void Player::Update() {
 }
 
 void Player::Draw(const Camera* camera) {
+	if (!m_is_alive) {
+		return;
+	}
+
 	m_model_group.player->Draw(m_world_transform, *camera);
 
 	for (const auto& bullet : m_bullets) {
@@ -59,6 +68,20 @@ void Player::ControlImGui() {
 	Bullet::ControlImGui();
 #endif
 }
+
+OBB Player::GetOBB() const {
+	Vector3 axis_x = {m_world_transform.matWorld_.m[0][0], m_world_transform.matWorld_.m[0][1], m_world_transform.matWorld_.m[0][2]};
+	Vector3 axis_y = {m_world_transform.matWorld_.m[1][0], m_world_transform.matWorld_.m[1][1], m_world_transform.matWorld_.m[1][2]};
+	Vector3 axis_z = {m_world_transform.matWorld_.m[2][0], m_world_transform.matWorld_.m[2][1], m_world_transform.matWorld_.m[2][2]};
+
+	return OBB{
+	    .center = m_world_transform.translation_,
+	    .orientations = {Normalize(axis_x), Normalize(axis_y), Normalize(axis_z)},
+	    .size = m_world_transform.scale_ * 0.5f,
+	};
+}
+
+void Player::OnCollision() { m_is_alive = false; }
 
 Bullet* Player::GetBullet(size_t index) {
 	if (index < k_max_bullet) {

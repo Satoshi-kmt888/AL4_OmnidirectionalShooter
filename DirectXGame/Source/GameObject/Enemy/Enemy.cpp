@@ -15,6 +15,7 @@ Enemy::~Enemy() = default;
 
 void Enemy::Initialize() {
 	m_world_transform.Initialize();
+	m_world_transform.translation_ = {0.0f, 0.0f, 10.0f};
 
 	m_is_alive = true;
 }
@@ -36,10 +37,14 @@ void Enemy::Draw(const Camera* camera) const {
 }
 
 OBB Enemy::GetOBB() const {
+	Vector3 axis_x = {m_world_transform.matWorld_.m[0][0], m_world_transform.matWorld_.m[0][1], m_world_transform.matWorld_.m[0][2]};
+	Vector3 axis_y = {m_world_transform.matWorld_.m[1][0], m_world_transform.matWorld_.m[1][1], m_world_transform.matWorld_.m[1][2]};
+	Vector3 axis_z = {m_world_transform.matWorld_.m[2][0], m_world_transform.matWorld_.m[2][1], m_world_transform.matWorld_.m[2][2]};
+
 	return OBB{
 	    .center = m_world_transform.translation_,
-	    .orientations = {m_world_transform.rotation_.x, m_world_transform.rotation_.y, m_world_transform.rotation_.z},
-	    .size = m_world_transform.scale_,
+	    .orientations = {Normalize(axis_x), Normalize(axis_y), Normalize(axis_z)},
+	    .size = m_world_transform.scale_ * 0.5f,
 	};
 }
 

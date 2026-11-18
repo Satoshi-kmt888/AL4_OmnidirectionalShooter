@@ -11,6 +11,7 @@ class Camera;
 class Model;
 } // namespace KamataEngine
 
+struct OBB;
 class InputAction;
 class Bullet;
 
@@ -38,11 +39,17 @@ public:
 
 	void ControlImGui();
 
+	// 当たり判定用
+	OBB GetOBB() const;
+	void OnCollision();
+
 	//=========================================================
 	// accessor
 	//=========================================================
 
 	const KamataEngine::WorldTransform& GetWorldTransform() const { return m_world_transform; }
+
+	bool IsAlive() const { return m_is_alive; }
 
 	size_t GetMaxBullet() const { return k_max_bullet; }
 	Bullet* GetBullet(size_t index);
@@ -70,6 +77,8 @@ private:
 
 	// ワールド変換データ
 	KamataEngine::WorldTransform m_world_transform{};
+
+	bool m_is_alive = true;
 
 	/*--- 移動 ---*/
 

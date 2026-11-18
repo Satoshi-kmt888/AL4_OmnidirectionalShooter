@@ -241,7 +241,8 @@ void GameScene::ChangeState() {
 }
 
 void GameScene::CheckCollisions() {
-	//
+	/*--- 弾と敵 ---*/
+
 	for (size_t bullet_index = 0; bullet_index < m_player->GetMaxBullet(); ++bullet_index) {
 		Bullet* bullet = m_player->GetBullet(bullet_index);
 		if (!bullet || !bullet->IsAlive()) {
@@ -258,6 +259,18 @@ void GameScene::CheckCollisions() {
 				enemy->OnCollision();
 				break;
 			}
+		}
+	}
+
+	/*--- プレイヤーと敵 ---*/
+
+	for (const auto& enemy : m_enemies) {
+		if (!enemy || !enemy->IsAlive()) {
+			continue;
+		}
+
+		if (Collision::IsCollision(m_player->GetOBB(), enemy->GetOBB())) {
+			m_player->OnCollision();
 		}
 	}
 }

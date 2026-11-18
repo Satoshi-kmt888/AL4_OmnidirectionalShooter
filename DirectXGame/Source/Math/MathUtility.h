@@ -27,6 +27,7 @@ KamataEngine::Vector3& operator-=(KamataEngine::Vector3& v1, const KamataEngine:
 KamataEngine::Vector3& operator*=(KamataEngine::Vector3& v, float scalar);
 KamataEngine::Vector3& operator/=(KamataEngine::Vector3& v, float scalar);
 
+float LengthSquared(const KamataEngine::Vector3& vector);
 // ベクトルの長さを求める
 float Length(const KamataEngine::Vector3& v);
 
@@ -34,7 +35,7 @@ float Length(const KamataEngine::Vector3& v);
 KamataEngine::Vector3 Normalize(const KamataEngine::Vector3& v);
 
 // 内積
-float Dot(const KamataEngine::Vector3& v);
+float Dot(const KamataEngine::Vector3& v1, const KamataEngine::Vector3& v2);
 // 外積
 KamataEngine::Vector3 Cross(const KamataEngine::Vector3& v1, const KamataEngine::Vector3& v2);
 

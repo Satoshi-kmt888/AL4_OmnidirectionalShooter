@@ -110,6 +110,8 @@ Vector3& operator/=(Vector3& v, float scalar) {
 	return v;
 }
 
+float LengthSquared(const Vector3& vector) { return (vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z); }
+
 float Length(const Vector3& v) { return std::sqrtf((v.x * v.x) + (v.y * v.y) + (v.z * v.z)); }
 
 Vector3 Normalize(const Vector3& v) {

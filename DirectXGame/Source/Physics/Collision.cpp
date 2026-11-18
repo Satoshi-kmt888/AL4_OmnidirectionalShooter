@@ -80,4 +80,55 @@ bool Collision::IsCollision(const OBB& obb, const Sphere& sphere) {
 
 	return false;
 }
+
+bool IsCollision(const OBB& obb1, const OBB& obb2) {
+	/*--- -15本の候補軸を配列に格納 ---*/
+
+	std::array<Vector3, 15> candidate_axes = {
+	    // obb1面法線候補軸
+	    obb1.orientations[0],
+	    obb1.orientations[1],
+	    obb1.orientations[2],
+	    // obb2面法線候補軸
+	    obb2.orientations[0],
+	    obb2.orientations[1],
+	    obb2.orientations[2],
+
+	    Cross(obb1.orientations[0], obb2.orientations[0]),
+	    Cross(obb1.orientations[0], obb2.orientations[1]),
+	    Cross(obb1.orientations[0], obb2.orientations[2]),
+	    Cross(obb1.orientations[1], obb2.orientations[0]),
+	    Cross(obb1.orientations[1], obb2.orientations[1]),
+	    Cross(obb1.orientations[1], obb2.orientations[2]),
+	    Cross(obb1.orientations[2], obb2.orientations[0]),
+	    Cross(obb1.orientations[2], obb2.orientations[1]),
+	    Cross(obb1.orientations[2], obb2.orientations[2]),
+	};
+
+	// obb同士の中心座標の差
+	Vector3 offset = obb2.center - obb1.center;
+
+	for (const auto& raw_axis : candidate_axes) {
+		Vector3 axis = raw_axis;
+		if (LengthSquared(axis) < 1e-5f) {
+			// 外積によって得られた軸の長さがほぼ0の場合はスキップする
+			continue;
+		}
+
+		axis = Normalize(axis);
+		float distance = std::abs(Dot(offset, axis));
+
+		// obb1の投影半径を計算
+		float r1 = obb1.size.x * std::abs(Dot(obb1.orientations[0], axis)) + obb1.size.y * std::abs(Dot(obb1.orientations[1], axis)) + obb1.size.z * std::abs(Dot(obb1.orientations[2], axis));
+		// obb2の投影半径を計算
+		float r2 = obb2.size.x * std::abs(Dot(obb2.orientations[0], axis)) + obb2.size.y * std::abs(Dot(obb2.orientations[1], axis)) + obb2.size.z * std::abs(Dot(obb2.orientations[2], axis));
+
+		// 「中心間距離」が「2つの半径の合計」よりも大きければ、分離軸が存在する
+		if (distance > (r1 + r2)) {
+			return false;
+		}
+	}
+
+	return true;
+}
 } // namespace Collision
