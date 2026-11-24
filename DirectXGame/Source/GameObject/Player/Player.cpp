@@ -99,8 +99,12 @@ void Player::Move() {
 	m_velocity.z = axis.y * m_move_speed;
 
 	if (axis != Vector2{0.0f, 0.0f}) {
-		float target_angle = std::atan2(axis.x, axis.y);
-		m_world_transform.rotation_.y = target_angle + std::numbers::pi_v<float>;
+		// 移動方向のベクトルが向いている角度をatan2から求める
+		float target_yaw = std::atan2(axis.x, axis.y);
+		// 最短角度の差を求める
+		float diff = std::remainder(target_yaw - m_world_transform.rotation_.y + std::numbers::pi_v<float>, 2.0f * std::numbers::pi_v<float>);
+		// フレームレート非依存の補間
+		m_world_transform.rotation_.y += diff * (1.0f - std::exp(-m_turn_speed * Time::GetInstance()->GetDeltaTime()));
 	}
 }
 

@@ -92,7 +92,7 @@ void InputAction::Update() {
 	auto input = Input::GetInstance();
 
 	XINPUT_STATE pad_state{};
-	const bool has_pad = input->GetJoystickState(0, pad_state);
+	const bool has_pad = (XInputGetState(0, &pad_state) == ERROR_SUCCESS);
 	const XINPUT_STATE* pad_state_ptr = has_pad ? &pad_state : nullptr;
 
 	for (size_t i = 0; i < k_action_count; ++i) {

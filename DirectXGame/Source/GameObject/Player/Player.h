@@ -91,6 +91,10 @@ private:
 	KamataEngine::Vector3 m_velocity{};
 	float m_move_speed = 10.0f;
 
+	/*--- ---*/
+
+	float m_turn_speed = 3.0f;
+
 	/*--- 弾 ---*/
 
 	static inline const uint32_t k_max_bullet = 32;
