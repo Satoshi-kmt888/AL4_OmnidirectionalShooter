@@ -28,13 +28,14 @@ GameScene::~GameScene() = default;
 
 void GameScene::Enter() {
 	// 入力処理を初期化
-	m_input_action = std::make_unique<InputAction>();
-	m_input_action->Register();
+	m_input = std::make_unique<InputAction>();
+	m_input->Register();
 
 	// カメラを初期化
 	m_camera.Initialize();
-
-	m_input = Input::GetInstance();
+	// デバッグカメラを初期化
+	m_debug_camera = std::make_unique<DebugCamera>();
+	m_debug_camera->Initialize();
 
 #ifdef DEVELOP
 	// デバッグ用軸インジケーターを初期化(Developビルドでは常に表示する)
@@ -47,11 +48,6 @@ void GameScene::Enter() {
 	//=========================================================
 	// game object
 	//=========================================================
-
-	/*--- デバッグカメラ ---*/
-
-	m_debug_camera = std::make_unique<DebugCamera>();
-	m_debug_camera->Initialize();
 
 	/*--- 天球 ---*/
 
@@ -72,7 +68,7 @@ void GameScene::Enter() {
 	};
 
 	m_player = std::make_unique<Player>();
-	m_player->Initialize(m_input_action.get(), player_models);
+	m_player->Initialize(m_input.get(), player_models);
 
 	/*--- カメラコントローラー ---*/
 
@@ -83,8 +79,8 @@ void GameScene::Enter() {
 	/*--- 敵 ---*/
 
 	Enemy::SetModel(Model::CreateFromOBJ("axis"));
-	m_enemies.resize(m_max_enemy);
-	for (uint32_t i = 0; i < m_max_enemy; ++i) {
+	m_enemies.resize(k_max_enemy);
+	for (uint32_t i = 0; i < k_max_enemy; ++i) {
 		m_enemies[i] = std::make_unique<Enemy>();
 		m_enemies[i]->Initialize();
 		m_enemies[i]->Spawn();
@@ -102,14 +98,13 @@ void GameScene::Enter() {
 
 void GameScene::Update() {
 	// 入力状態を更新
-	m_input_action->Update();
+	m_input->Update();
 
+	// 状態遷移
 	ChangeState();
 
+	// imgui操作
 	ControlImGui();
-
-	// カメラを更新
-	UpdateCamera();
 
 	m_wipe->Update();
 
@@ -127,6 +122,10 @@ void GameScene::Update() {
 		}
 	}
 
+	// カメラを更新
+	UpdateCamera();
+
+	// ゲームオブジェクトの更新処理が終わってから当たり判定
 	CheckCollisions();
 
 #ifdef DEVELOP
@@ -160,7 +159,7 @@ void GameScene::Exit() {
 void GameScene::UpdateCamera() {
 #ifdef DEVELOP
 	// デバッグカメラを有効化するか
-	if (m_input->TriggerKey(DIK_F1)) {
+	if (m_input->IsTrigger(Action::ACTION_DEBUG)) {
 		m_is_debug_camera_enabled = !m_is_debug_camera_enabled;
 	}
 

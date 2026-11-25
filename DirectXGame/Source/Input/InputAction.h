@@ -15,9 +15,10 @@ class Input;
 ///
 /// </summary>
 enum class Action {
+	ACTION_DEBUG,  // デバッグ切り替え
 	ACTION_DECIDE, // 決定
 	ACTION_CANCEL, // キャンセル
-	ACTION_ATTACK, //攻撃
+	ACTION_ATTACK, // 攻撃
 
 	COUNT,
 };

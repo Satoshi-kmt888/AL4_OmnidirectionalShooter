@@ -74,26 +74,28 @@ private:
 	State m_state = State::STATE_OPENING;
 
 	// 入力
-	std::unique_ptr<InputAction> m_input_action;
+	std::unique_ptr<InputAction> m_input;
 
 	// カメラ
 	KamataEngine::Camera m_camera{};
-
-	KamataEngine::Input* m_input = nullptr;
-	KamataEngine::AxisIndicator* m_axis = nullptr;
-
-	// デバッグカメラの有効化
+	//デバッグカメラ
+	std::unique_ptr<DebugCamera> m_debug_camera;
 	bool m_is_debug_camera_enabled = false;
-	uint32_t m_max_enemy = 5;
+
+	//デバッグ用軸表示
+	KamataEngine::AxisIndicator* m_axis = nullptr;
 
 	/*--- ゲームオブジェクト ---*/
 
-	std::unique_ptr<DebugCamera> m_debug_camera;
 	std::unique_ptr<Skysphere> m_skysphere;
 	std::unique_ptr<Ground> m_ground;
 	std::unique_ptr<Player> m_player;
 	std::unique_ptr<CameraController> m_camera_controller;
 	std::vector<std::unique_ptr<Enemy>> m_enemies;
+
+	/*--- 定数 ---*/
+
+	const uint32_t k_max_enemy = 32;
 
 	/*--- 演出 ---*/
 

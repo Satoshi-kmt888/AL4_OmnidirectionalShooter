@@ -76,11 +76,14 @@ InputAction::InputAction() = default;
 InputAction::~InputAction() = default;
 
 void InputAction::Register() {
+	// デバッグ切り替え
+	AddBinding(Action::ACTION_DEBUG, {InputDevice::DEVICE_KEYBOARD, DIK_F1});
+
 	// 決定
 	AddBinding(Action::ACTION_DECIDE, {InputDevice::DEVICE_KEYBOARD, DIK_SPACE});
 	AddBinding(Action::ACTION_DECIDE, {InputDevice::DEVICE_PAD, XINPUT_GAMEPAD_A});
 
-	//攻撃
+	// 攻撃
 	AddBinding(Action::ACTION_ATTACK, {InputDevice::DEVICE_KEYBOARD, DIK_SPACE});
 	AddBinding(Action::ACTION_ATTACK, {InputDevice::DEVICE_PAD, XINPUT_GAMEPAD_X});
 }
