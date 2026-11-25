@@ -96,6 +96,8 @@ private:
 	/*--- 定数 ---*/
 
 	const uint32_t k_max_enemy = 32;
+	float m_enemy_spawn_cool_time = 3.0f;
+	float m_enemy_spawn_timer = 0.0f;
 
 	/*--- 演出 ---*/
 

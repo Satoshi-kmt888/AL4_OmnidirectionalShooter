@@ -1,5 +1,6 @@
 #include "GameScene.h"
 
+#include "Core/Time.h"
 #include "GameObject/Bullet/Bullet.h"
 #include "GameObject/Camera/CameraController.h"
 #include "GameObject/Camera/DebugCamera.h"
@@ -16,9 +17,9 @@
 #include <2d/Sprite.h>
 #include <3d/AxisIndicator.h>
 #include <3d/Model.h>
+#include <algorithm>
 #include <base/TextureManager.h>
 #include <imgui.h>
-#include <input/Input.h>
 
 using namespace KamataEngine;
 
@@ -83,7 +84,6 @@ void GameScene::Enter() {
 	for (uint32_t i = 0; i < k_max_enemy; ++i) {
 		m_enemies[i] = std::make_unique<Enemy>();
 		m_enemies[i]->Initialize();
-		m_enemies[i]->Spawn();
 	}
 
 	//=========================================================
@@ -114,6 +114,17 @@ void GameScene::Update() {
 
 	m_player->Update();
 	m_camera_controller->Update();
+
+	m_enemy_spawn_timer = std::clamp(m_enemy_spawn_timer - Time::GetInstance()->GetDeltaTime(), 0.0f, m_enemy_spawn_cool_time);
+	if (m_enemy_spawn_timer <= 0.0f) {
+		for (const auto& enemy : m_enemies) {
+			if (!enemy->IsAlive()) {
+				m_enemy_spawn_timer = m_enemy_spawn_cool_time;
+				enemy->Spawn();
+				break;
+			}
+		}
+	}
 
 	for (const auto& enemy : m_enemies) {
 		if (enemy) {

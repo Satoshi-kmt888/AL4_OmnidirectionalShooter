@@ -17,11 +17,7 @@ Enemy::Enemy() = default;
 
 Enemy::~Enemy() = default;
 
-void Enemy::Initialize() {
-	m_world_transform.Initialize();
-
-	m_is_alive = true;
-}
+void Enemy::Initialize() { m_world_transform.Initialize(); }
 
 void Enemy::Update() {
 	if (!m_is_alive) {
@@ -68,13 +64,13 @@ void Enemy::SetModel(KamataEngine::Model* model) {
 void Enemy::ApprochTarget(const KamataEngine::Vector3& target) {
 	// 自分から接近対象への向きを計算する
 	Vector3 dir_target = Normalize(target - m_world_transform.translation_);
-	//向きと速さで速度を計算
+	// 向きと速さで速度を計算
 	m_velocity = dir_target * m_approch_speed;
 
-	//ベクトルの向きから回転の角度を求める
+	// ベクトルの向きから回転の角度を求める
 	float yaw = std::atan2(dir_target.x, dir_target.z);
-	//最短回転角を計算する
+	// 最短回転角を計算する
 	float diff = std::remainder(yaw - m_world_transform.rotation_.y, 2.0f * std::numbers::pi_v<float>);
-	//フレームレート非依存の回転補間
+	// フレームレート非依存の回転補間
 	m_world_transform.rotation_.y += diff * (1.0f * std::exp(-m_turn_speed * Time::GetInstance()->GetDeltaTime()));
 }

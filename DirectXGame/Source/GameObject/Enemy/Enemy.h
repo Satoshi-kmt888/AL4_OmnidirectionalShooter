@@ -52,10 +52,10 @@ private:
 
 	// モデル(同じモデルを使う)
 	static inline KamataEngine::Model* m_model = nullptr;
-	//ワールド変換データ
+	// ワールド変換データ
 	KamataEngine::WorldTransform m_world_transform{};
 
-	//生存フラグ
+	// 生存フラグ
 	bool m_is_alive = false;
 
 	/*--- 当たり判定 ---*/
