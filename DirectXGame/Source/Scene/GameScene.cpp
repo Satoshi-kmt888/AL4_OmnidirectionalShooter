@@ -11,6 +11,7 @@
 #include "Geometry/OBB.h"
 #include "Geometry/Sphere.h"
 #include "Input/InputAction.h"
+#include "Math/MathUtility.h"
 #include "Physics/Collision.h"
 #include "Wipe/WipeManager.h"
 
@@ -22,6 +23,7 @@
 #include <imgui.h>
 
 using namespace KamataEngine;
+using namespace MathUtility;
 
 GameScene::GameScene() = default;
 
@@ -94,6 +96,20 @@ void GameScene::Enter() {
 
 	m_wipe = std::make_unique<WipeManager>();
 	m_wipe->Start(WipeType::TYPE_GRID, WipeState::STATE_FADE_OUT, m_wipe_duration, TextureManager::Load("white1x1.png"));
+
+	//=========================================================
+	// UI
+	//=========================================================
+
+	//プレイヤーライフ
+	m_sprites_player_life.resize(static_cast<size_t>(m_player->GetLife()));
+	for (int i = 0; i < m_player->GetLife(); ++i) {
+		m_sprites_player_life[i].reset(Sprite::Create(TextureManager::Load("image/herat.png"), Vector2{0.0f, 0.0f}));
+		Vector2 position = {m_sprite_player_life_pos.x + static_cast<float>(i) * m_sprite_player_life_pos_interval, m_sprite_player_life_pos.y};
+		m_sprites_player_life[i]->SetPosition(position);
+		m_sprites_player_life[i]->SetSize(m_sprite_player_size);
+		m_sprites_player_life[i]->SetAnchorPoint({0.5f, 0.5f});
+	}
 }
 
 void GameScene::Update() {
@@ -215,6 +231,10 @@ void GameScene::DrawSprite() {
 	// モデル描画前処理
 	Sprite::PreDraw();
 	//-------------------------
+
+	for (int i = 0; i < m_player->GetLife(); ++i) {
+		m_sprites_player_life[i]->Draw();
+	}
 
 	// ワイプは最後に描画
 	m_wipe->Draw();

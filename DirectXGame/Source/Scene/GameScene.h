@@ -4,12 +4,14 @@
 
 #include <3d/Camera.h>
 #include <cstdint>
+#include <math/Vector2.h>
 #include <memory>
 #include <vector>
 
 namespace KamataEngine {
 class Input;
 class AxisIndicator;
+class Sprite;
 } // namespace KamataEngine
 
 class InputAction;
@@ -104,4 +106,12 @@ private:
 	//ワイプ
 	std::unique_ptr<WipeManager> m_wipe;
 	const float m_wipe_duration = 0.8f;
+
+	/*--- UI ---*/
+
+	//プレイヤーライフ
+	std::vector<std::unique_ptr<KamataEngine::Sprite>> m_sprites_player_life;
+	KamataEngine::Vector2 m_sprite_player_life_pos = {48.0f, 640.0f};
+	float m_sprite_player_life_pos_interval = 32.0f;
+	KamataEngine::Vector2 m_sprite_player_size = {64.0f, 64.0f};
 };

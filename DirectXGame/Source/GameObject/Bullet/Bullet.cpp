@@ -43,7 +43,10 @@ Sphere Bullet::GetSphere() const {
 
 void Bullet::OnCollision() { m_is_alive = false; }
 
-void Bullet::SetModel(Model* model) { s_model = model; }
+void Bullet::SetModel(Model* model) {
+	assert(model);
+	s_model = model;
+}
 
 void Bullet::ControlImGui() {
 #ifdef USE_IMGUI

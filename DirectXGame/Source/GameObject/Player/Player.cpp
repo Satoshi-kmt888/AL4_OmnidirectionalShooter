@@ -19,15 +19,20 @@ Player::Player() = default;
 Player::~Player() = default;
 
 void Player::Initialize(const InputAction* input, const ModelGroup& model_group) {
+	//入力処理のポインタを受け取る
 	m_input = input;
-	m_model_group = model_group;
 
+	//モデルを受け取る(プレイヤー本体のみassertチェック)
+	assert(m_models.player);
+	m_models = model_group;
+
+	//ワールド変換データを初期化
 	m_world_transform.Initialize();
 	m_world_transform.translation_.y = m_height * 0.5f;
 
 	/*--- 弾 ---*/
 
-	Bullet::SetModel(m_model_group.bullet);
+	Bullet::SetModel(m_models.bullet);
 	for (auto& bullet : m_bullets) {
 		bullet = std::make_unique<Bullet>();
 		bullet->Initialize();
@@ -35,7 +40,7 @@ void Player::Initialize(const InputAction* input, const ModelGroup& model_group)
 }
 
 void Player::Update() {
-	if (!m_is_alive) {
+	if (!IsAlive()) {
 		return;
 	}
 
@@ -45,14 +50,20 @@ void Player::Update() {
 
 	m_world_transform.translation_ += m_velocity * Time::GetInstance()->GetDeltaTime();
 	UpdateWorldTransform(m_world_transform);
+
+	if (m_invencible_timer > 0) {
+		--m_invencible_timer;
+	}
 }
 
 void Player::Draw(const Camera* camera) {
-	if (!m_is_alive) {
+	if (!IsAlive()) {
 		return;
 	}
 
-	m_model_group.player->Draw(m_world_transform, *camera);
+	if (m_invencible_timer % 5 == 0) {
+		m_models.player->Draw(m_world_transform, *camera);
+	}
 
 	for (const auto& bullet : m_bullets) {
 		if (bullet->IsAlive()) {
@@ -83,7 +94,20 @@ OBB Player::GetOBB() const {
 	};
 }
 
-void Player::OnCollision() { m_is_alive = false; }
+void Player::OnCollision() {
+	// 無敵時間があるなら処理をスキップ
+	if (m_invencible_timer > 0) {
+		return;
+	}
+
+	// 無敵時間がない場合
+	if (m_invencible_timer <= 0) {
+		// ライフを1減らす
+		--m_life;
+		// 無敵時間を設定する
+		m_invencible_timer = m_invencible_time;
+	}
+}
 
 Bullet* Player::GetBullet(size_t index) {
 	if (index < k_max_bullet) {

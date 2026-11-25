@@ -49,7 +49,8 @@ public:
 
 	const KamataEngine::WorldTransform& GetWorldTransform() const { return m_world_transform; }
 
-	bool IsAlive() const { return m_is_alive; }
+	int GetLife() const { return m_life; }
+	bool IsAlive() const { return m_life > 0; }
 
 	size_t GetMaxBullet() const { return k_max_bullet; }
 	Bullet* GetBullet(size_t index);
@@ -73,18 +74,24 @@ private:
 	const InputAction* m_input = nullptr;
 
 	// モデル群
-	ModelGroup m_model_group{};
-
+	ModelGroup m_models{};
 	// ワールド変換データ
 	KamataEngine::WorldTransform m_world_transform{};
-
-	bool m_is_alive = true;
 
 	/*--- 当たり判定 ---*/
 
 	float m_width = 1.9f;
 	float m_height = 2.0f;
 	float m_depth = 1.9f;
+
+	/*--- ---*/
+
+	bool m_is_alive = true;
+
+	int m_life = 5;
+
+	int m_invencible_time = 60;
+	int m_invencible_timer = 0;
 
 	/*--- 移動 ---*/
 
