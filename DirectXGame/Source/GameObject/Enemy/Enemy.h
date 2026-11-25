@@ -29,6 +29,7 @@ public:
 	void OnCollision();
 
 	void Spawn();
+	void ApprochTarget(const KamataEngine::Vector3& target);
 
 	//=========================================================
 	// accessor
@@ -51,9 +52,10 @@ private:
 
 	// モデル(同じモデルを使う)
 	static inline KamataEngine::Model* m_model = nullptr;
-
+	//ワールド変換データ
 	KamataEngine::WorldTransform m_world_transform{};
 
+	//生存フラグ
 	bool m_is_alive = false;
 
 	/*--- 当たり判定 ---*/
@@ -61,4 +63,13 @@ private:
 	float m_width = 2.0f;
 	float m_height = 2.0f;
 	float m_depth = 2.0f;
+
+	/*--- 移動 ---*/
+
+	KamataEngine::Vector3 m_velocity{};
+	float m_approch_speed = 2.0f;
+
+	/*--- 回転 ---*/
+
+	float m_turn_speed = 2.0f;
 };

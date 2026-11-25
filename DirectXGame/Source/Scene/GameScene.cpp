@@ -122,6 +122,7 @@ void GameScene::Update() {
 
 	for (const auto& enemy : m_enemies) {
 		if (enemy) {
+			enemy->ApprochTarget(m_player->GetWorldTransform().translation_);
 			enemy->Update();
 		}
 	}
